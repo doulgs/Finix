@@ -1,0 +1,117 @@
+CREATE TABLE `accounts` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`alias` text,
+	`type` text NOT NULL,
+	`bank` text,
+	`agency` text,
+	`number` text,
+	`long_description` text,
+	`color` text,
+	`icon` text,
+	`icon_font` text,
+	`emoji` text,
+	`balance` real DEFAULT 0,
+	`initial_balance` real DEFAULT 0,
+	`credit_limit` real,
+	`currency` text DEFAULT 'BRL',
+	`is_favorite` integer DEFAULT false,
+	`is_included_in_total` integer DEFAULT true,
+	`is_archived` integer DEFAULT false,
+	`order` integer DEFAULT 0,
+	`user_id` text,
+	`web_sync_id` text,
+	`created_at` text DEFAULT '2025-04-12T22:00:43.392Z' NOT NULL,
+	`updated_at` text DEFAULT '2025-04-12T22:00:43.393Z' NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE `categories` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`type` text,
+	`description` text,
+	`long_description` text,
+	`color` text,
+	`icon` text,
+	`icon_font` text,
+	`emoji` text,
+	`alias` text,
+	`parent_id` text,
+	`group` text,
+	`order` integer DEFAULT 0,
+	`is_fixed` integer DEFAULT false,
+	`is_editable` integer DEFAULT true,
+	`is_favorite` integer DEFAULT false,
+	`is_visible` integer DEFAULT true,
+	`web_sync_id` text,
+	`user_id` text,
+	`created_at` text DEFAULT '2025-04-12T22:00:43.398Z' NOT NULL,
+	`updated_at` text DEFAULT '2025-04-12T22:00:43.398Z' NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE `documents` (
+	`id` text PRIMARY KEY NOT NULL,
+	`transaction_id` text NOT NULL,
+	`file_name` text NOT NULL,
+	`file_type` text,
+	`file_base64` text NOT NULL,
+	`description` text,
+	`web_sync_id` text,
+	`created_at` text DEFAULT '2025-04-12T22:00:43.402Z' NOT NULL,
+	`updated_at` text DEFAULT '2025-04-12T22:00:43.402Z' NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE `transactions` (
+	`id` text PRIMARY KEY NOT NULL,
+	`amount` real NOT NULL,
+	`transaction_type` text NOT NULL,
+	`description` text,
+	`notes` text,
+	`date` text NOT NULL,
+	`due_date` text,
+	`status` text NOT NULL,
+	`payment_method` text NOT NULL,
+	`paid` integer DEFAULT false,
+	`paid_at` text,
+	`installment_count` integer,
+	`installment_number` integer,
+	`parent_transaction_id` text,
+	`document_number` text,
+	`document_type` text,
+	`user_id` text,
+	`account_id` text,
+	`category_id` text,
+	`web_sync_id` text,
+	`created_at` text DEFAULT '2025-04-12T22:00:43.406Z' NOT NULL,
+	`updated_at` text DEFAULT '2025-04-12T22:00:43.406Z' NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE `users` (
+	`id` text PRIMARY KEY NOT NULL,
+	`email` text NOT NULL,
+	`password` text NOT NULL,
+	`name` text,
+	`phone` text,
+	`image` text,
+	`role` text DEFAULT 'USER',
+	`is_active` integer DEFAULT true NOT NULL,
+	`document_number` text,
+	`language` text DEFAULT 'pt-BR',
+	`theme` text DEFAULT 'system',
+	`push_token` text,
+	`cep` text,
+	`street` text,
+	`number` text,
+	`complement` text,
+	`neighborhood` text,
+	`city` text,
+	`state` text,
+	`country` text DEFAULT 'Brasil',
+	`accepted_terms_at` text,
+	`web_sync_id` text,
+	`created_at` text DEFAULT '2025-04-12T22:00:43.411Z' NOT NULL,
+	`updated_at` text DEFAULT '2025-04-12T22:00:43.411Z' NOT NULL
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `users_email_unique` ON `users` (`email`);--> statement-breakpoint
+CREATE UNIQUE INDEX `users_document_number_unique` ON `users` (`document_number`);
