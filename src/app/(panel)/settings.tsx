@@ -2,18 +2,21 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons, Feather, MaterialIcons } from "@expo/vector-icons";
 import { Card } from "@/components/Cards";
+import { useUserRepository } from "@/hooks/repositories/userRepository";
+import { useUserStorage } from "@/storages/useUserStorage";
 
 export default function ProfileScreen() {
-  const imagem =
-    "https://images.unsplash.com/photo-1677631231234-1234567890ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60";
+  const { user } = useUserStorage();
+  const { signOut } = useUserRepository();
+
   return (
     <View className="flex-1 bg-white p-4">
       <View className="flex-row mb-6 gap-4">
         <View>
           <Image
             source={
-              imagem
-                ? { uri: imagem } // ou `${imagem}` se já tiver o prefixo
+              user?.image
+                ? { uri: user.image } // ou `${imagem}` se já tiver o prefixo
                 : require("@/assets/image/default-profile.jpg")
             }
             style={{
@@ -28,15 +31,15 @@ export default function ProfileScreen() {
           />
         </View>
         <Card className="flex-1">
-          <Text className="mt-4 text-xl font-bold text-gray-900 dark:text-white">{""}</Text>
+          <Text className="mt-4 text-xl font-bold text-gray-900 dark:text-white">{user?.name}</Text>
           <Text className="text-gray-700 dark:text-gray-300" numberOfLines={1}>
             CPF: 116.050.599-35
           </Text>
           <Text className="text-gray-700 dark:text-gray-300" numberOfLines={1}>
-            Email: {""}
+            Email: {user?.email}
           </Text>
           <Text className="text-gray-700 dark:text-gray-300" numberOfLines={1}>
-            Cargo: {""}
+            Cargo: {user?.role === "admin" ? "Administrador" : "Colaborador"}
           </Text>
         </Card>
       </View>
@@ -58,7 +61,7 @@ export default function ProfileScreen() {
         </Card>
 
         <Card>
-          <TouchableOpacity className="flex-row items-center justify-between">
+          <TouchableOpacity className="flex-row items-center justify-between" onPress={signOut}>
             <Text className="text-red-600 font-medium">Sair da Conta</Text>
             <MaterialIcons name="logout" size={22} color="#EF4444" />
           </TouchableOpacity>

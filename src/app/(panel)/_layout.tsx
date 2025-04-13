@@ -1,23 +1,25 @@
 import { CustomHeader } from "@/components/Headers/CustomHeader";
 import { CustomTabBarPanel } from "@/components/Tabs-Bars/CustomTabBarPanel";
 import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
-import { takeGreeting } from "@/utils/takeGreeting";
+import { useUserStorage } from "@/storages/useUserStorage";
 import { Octicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
 
 export default function LayoutPanel() {
+  const { user } = useUserStorage();
   const { to } = useCustomNavigation();
   return (
     <Tabs tabBar={(props) => <CustomTabBarPanel {...props} />}>
       <Tabs.Screen
         name="index"
         options={{
-          title: `${takeGreeting()}`,
+          title: "Dashboard",
           header: (props) => (
             <CustomHeader
               {...props}
-              subTitle={""}
+              subTitle={user?.name ? user.name : "Usuário"}
+              imageAvatar={user?.image}
               hideBackButton
               actions={[
                 {

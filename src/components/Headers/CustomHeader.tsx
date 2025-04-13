@@ -5,6 +5,7 @@ import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
 import { clsx } from "clsx";
 import { CustomBackground } from "@/components/Background/CustomBackground";
+import { takeGreeting } from "@/utils/takeGreeting";
 
 interface ActionsProps {
   className?: string;
@@ -62,7 +63,7 @@ export const CustomHeader: React.FC<StackOrTabHeaderProps> = ({
             </TouchableOpacity>
           )}
 
-          {imageAvatar && imageAvatar !== null && (
+          {imageAvatar && (
             <Image
               source={
                 imageAvatar
@@ -81,7 +82,7 @@ export const CustomHeader: React.FC<StackOrTabHeaderProps> = ({
           )}
 
           <View>
-            <Text className="text-xl font-bold text-white">{title}</Text>
+            <Text className="text-xl font-bold text-white">{title === "Dashboard" ? `${takeGreeting()}` : title}</Text>
             {subTitle && <Text className="text-sm text-white italic">{subTitle}</Text>}
             {label && <Text className="text-white text-[10px] italic">{label}</Text>}
           </View>
