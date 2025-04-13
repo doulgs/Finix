@@ -89,8 +89,8 @@ export default function Register() {
           description: "Você pode fazer login agora.",
           position: "bottom",
         });
-        to.login();
         reset();
+        to.panel.dashboard();
       });
     } catch (error: any) {
       console.warn("Register error:", error);

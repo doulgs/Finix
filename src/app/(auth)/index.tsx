@@ -1,26 +1,31 @@
+import { LogoFinix } from "@/assets/svg/LogoFinix";
+import { CustomBackground } from "@/components/Background/CustomBackground";
+import { CustomInput } from "@/components/Inputs/CustomInput";
+import { useLoading } from "@/context/LoadingContext";
+import { useToast } from "@/context/ToastContext";
+import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
+import { useUserRepository } from "@/hooks/repositories/userRepository";
+import { useUserStorage } from "@/storages/useUserStorage";
 import { Ionicons } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRootNavigationState } from "expo-router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Alert, Keyboard, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as yup from "yup";
 
-import { CustomBackground } from "@/components/Background/CustomBackground";
-import { CustomInput } from "@/components/Inputs/CustomInput";
-
-import { useLoading } from "@/context/LoadingContext";
-import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
-import { LogoFinix } from "@/assets/svg/LogoFinix";
-
 const loginSchema = yup.object().shape({
-  empresa: yup.string().required("Empresa obrigatória"),
   email: yup.string().email("E-mail inválido").required("E-mail obrigatório"),
-  password: yup.string().min(3, "A senha deve ter pelo menos 3 caracteres").required("Senha obrigatória"),
+  password: yup.string().min(3, "A senha deve ter pelo menos 6 caracteres").required("Senha obrigatória"),
 });
 
 export default function Login() {
+  const navigationState = useRootNavigationState();
   const { to } = useCustomNavigation();
   const { setLoading } = useLoading();
+  const { authenticate } = useUserRepository();
+  const { showToast } = useToast();
+  const { user } = useUserStorage();
 
   const {
     control,
@@ -31,14 +36,34 @@ export default function Login() {
     resolver: yupResolver(loginSchema),
   });
 
-  const onSubmit = async (data: { empresa: string; email: string; password: string }) => {
+  useEffect(() => {
+    if (!navigationState?.key) return;
+    if (user) {
+      to.panel.dashboard();
+    }
+  }, [user, navigationState?.key]);
+
+  const onSubmit = async (data: { email: string; password: string }) => {
     try {
       setLoading(true, { msg: "Autenticando..." });
+
+      const isAuthenticated = await authenticate(data.email, data.password);
+
+      if (!isAuthenticated) {
+        showToast({
+          type: "danger",
+          text: "Login inválido",
+          description: "Verifique seu e-mail e senha e tente novamente.",
+          position: "bottom",
+        });
+        return;
+      }
+
       reset();
       to.panel.dashboard();
     } catch (error: any) {
       console.warn("Login error:", error);
-      Alert.alert("Falha no login", error?.message || "Verifique os dados e tente novamente.");
+      Alert.alert("Erro", error?.message || "Falha ao realizar login.");
     } finally {
       setLoading(false);
     }
