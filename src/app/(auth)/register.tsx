@@ -4,16 +4,18 @@ import { useForm } from "react-hook-form";
 import { Alert, Keyboard, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as yup from "yup";
 import React, { useState } from "react";
+import * as Crypto from "expo-crypto";
 
 import { CustomBackground } from "@/components/Background/CustomBackground";
 import { CustomInput } from "@/components/Inputs/CustomInput";
 import { useLoading } from "@/context/LoadingContext";
 import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
 import { LogoFinix } from "@/assets/svg/LogoFinix";
-import { v4 as uuidv4 } from "uuid";
+import uuid from "react-native-uuid";
 import { useUserRepository } from "@/hooks/repositories/userRepository";
 import { TermsModal } from "@/components/Modals/TermsModal";
 import { PrimaryButton } from "@/components/Buttons/PrimaryButton";
+import { useToast } from "@/context/ToastContext";
 
 const registerSchema = yup.object().shape({
   name: yup.string().required("Nome é obrigatório"),
@@ -44,6 +46,7 @@ type FormData = {
 export default function Register() {
   const { setLoading } = useLoading();
   const { to } = useCustomNavigation();
+  const { showToast, ToastButton } = useToast();
 
   const { create: createUser } = useUserRepository();
 
@@ -69,21 +72,34 @@ export default function Register() {
     try {
       setLoading(true, { msg: "Criando conta..." });
 
+      const hashedPassword = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, data.password);
+
       const newUser = {
-        id: uuidv4(),
+        id: String(uuid.v4()),
         name: data.name,
         document: data.document,
         email: data.email,
-        password: data.password,
+        password: hashedPassword,
       };
 
-      await createUser(newUser);
-
-      Alert.alert("Sucesso", "Conta criada com sucesso!");
-      to.login();
-      reset();
+      await createUser(newUser).then(() => {
+        showToast({
+          type: "warning",
+          text: "Conta criada com sucesso!",
+          description: "Você pode fazer login agora.",
+          position: "bottom",
+        });
+        to.login();
+        reset();
+      });
     } catch (error: any) {
-      Alert.alert("Erro ao registrar", error?.message || "Tente novamente mais tarde.");
+      console.warn("Register error:", error);
+      showToast({
+        type: "danger",
+        text: "Erro ao registrar",
+        description: `${error?.message} || "Tente novamente mais tarde.`,
+        position: "bottom",
+      });
     } finally {
       setLoading(false);
     }

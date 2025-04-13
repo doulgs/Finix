@@ -59,12 +59,13 @@
     "react-native-screens": "~4.4.0",
     "react-native-svg": "15.8.0",
     "react-native-url-polyfill": "^2.0.0",
+    "react-native-uuid": "^2.0.3",
     "react-native-web": "~0.19.13",
     "reanimated-color-picker": "^4.0.1",
     "tailwindcss": "3.4.17",
-    "uuid": "^11.1.0",
     "yup": "^1.6.1",
-    "zustand": "^5.0.3"
+    "zustand": "^5.0.3",
+    "expo-crypto": "~14.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
