@@ -116,16 +116,16 @@ export default function Register() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          <View className="flex-1 justify-center items-center bg-background-light/10 dark:bg-background-dark/25 px-4 py-8">
-            <View className="w-full bg-card-light dark:bg-card-dark p-6 rounded-3xl shadow-lg border border-border-light dark:border-border-dark">
+          <View className="flex-1 justify-center items-center px-4 py-8">
+            <View className="w-full bg-light-background-default dark:bg-dark-background-default p-6 rounded-3xl shadow-lg border border-border-light dark:border-border-dark">
               <View className="flex-row items-center gap-2 justify-center mb-2">
                 <LogoFinix />
-                <Text className="text-primary-light dark:text-primary-dark text-center mt-4 text-5xl font-bold">
+                <Text className="text-light-brand-primary dark:text-dark-brand-primary text-center mt-4 text-5xl font-bold">
                   Registrar-se
                 </Text>
               </View>
 
-              <Text className="text-text-light dark:text-text-dark text-center font-medium mb-4">
+              <Text className="text-light-brand-secondary dark:text-dark-brand-secondary text-center font-medium mb-4">
                 Preencha os campos para criar sua conta no Finix
               </Text>
 

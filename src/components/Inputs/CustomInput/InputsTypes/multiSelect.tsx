@@ -22,7 +22,7 @@ export const MultiSelectInput = ({
   value,
   onChange,
   placeholder = "Selecionar",
-  options = [], // ← default para evitar undefined
+  options = [],
   title = "Selecionar opções",
 }: MultiSelectProps) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -59,10 +59,12 @@ export const MultiSelectInput = ({
       const isSelected = selected.includes(item.value);
       return (
         <TouchableOpacity
-          className="flex-row justify-between items-center px-4 py-3 border-b border-gray-200"
+          className="flex-row justify-between items-center px-4 py-3 border-b border-light-stroke-default dark:border-dark-stroke-default"
           onPress={() => toggleSelection(item)}
         >
-          <Text className="text-base text-black">{item.label}</Text>
+          <Text className="text-base text-light-typography-primary dark:text-dark-typography-primary">
+            {item.label}
+          </Text>
           {isSelected && <Ionicons name="checkmark" size={20} color="#FF941A" />}
         </TouchableOpacity>
       );
@@ -70,24 +72,28 @@ export const MultiSelectInput = ({
     [selected]
   );
 
-  const selectedLabels = options
-    ? options
-        .filter((o) => value.includes(o.value))
-        .map((o) => o.label)
-        .join(" | ")
-    : "";
+  const selectedLabels =
+    options
+      ?.filter((o) => value.includes(o.value))
+      .map((o) => o.label)
+      .join(" | ") ?? "";
 
   return (
     <>
       <TouchableOpacity className="flex-1 flex-row items-center justify-between px-1" onPress={openModal}>
         <Text
-          className={clsx("flex-1 text-base", value.length > 0 ? "text-gray-900 dark:text-white" : "text-gray-500")}
+          className={clsx(
+            "flex-1 text-base",
+            value.length > 0
+              ? "text-light-typography-primary dark:text-dark-typography-primary"
+              : "text-light-typography-muted dark:text-dark-typography-muted"
+          )}
           numberOfLines={1}
           ellipsizeMode="tail"
         >
           {selectedLabels || placeholder}
         </Text>
-        <Ionicons name="chevron-down" size={20} color="#666" />
+        <Ionicons name="chevron-down" size={20} color="#9CA3AF" />
       </TouchableOpacity>
 
       <BottomSheetModal
@@ -97,25 +103,28 @@ export const MultiSelectInput = ({
         backdropComponent={renderBackdrop}
         enableDismissOnClose
         backgroundStyle={{
-          backgroundColor: "#f3f4f6",
+          backgroundColor: "#FFFFFF",
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
-          borderColor: "#8c8c8c",
+          borderColor: "#D1D5DB", // stroke.default
           borderWidth: 1,
         }}
       >
-        <View className="flex-row items-center justify-between px-4 py-3 border-b border-gray-300">
-          <Text className="font-bold text-xl text-black">{title}</Text>
-          <TouchableOpacity className="bg-primary-light dark:bg-primary-dark p-2 rounded-lg" onPress={applySelection}>
-            <Text className="text-white text-center font-semibold text-base">Confirmar</Text>
+        <View className="flex-row items-center justify-between px-4 py-3 border-b border-light-stroke-default dark:border-dark-stroke-default">
+          <Text className="font-bold text-xl text-light-typography-primary dark:text-dark-typography-primary">
+            {title}
+          </Text>
+          <TouchableOpacity
+            className="bg-light-brand-primary dark:bg-dark-brand-primary p-2 rounded-lg"
+            onPress={applySelection}
+          >
+            <Text className="text-light-typography-inverse dark:text-dark-typography-inverse text-center font-semibold text-base">
+              Confirmar
+            </Text>
           </TouchableOpacity>
         </View>
 
-        <BottomSheetFlatList
-          data={options ?? []} // ← proteção extra
-          keyExtractor={(item) => item.value}
-          renderItem={renderItem}
-        />
+        <BottomSheetFlatList data={options} keyExtractor={(item) => item.value} renderItem={renderItem} />
       </BottomSheetModal>
     </>
   );

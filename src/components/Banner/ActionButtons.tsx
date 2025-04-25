@@ -1,9 +1,8 @@
 import React from "react";
-
 import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import { Card } from "../Cards";
+import { Card } from "@/components/Cards";
 
 export function ActionButtons() {
   const { to } = useCustomNavigation();
@@ -13,7 +12,7 @@ export function ActionButtons() {
       id: "1",
       title: "Contas",
       icon: "bank",
-      color: "#22c55e", // verde
+      color: "text-light-status-success dark:text-dark-status-success",
       onlyIcon: false,
       onPress: () => to.transactions.new(),
     },
@@ -21,7 +20,7 @@ export function ActionButtons() {
       id: "2",
       title: "Categorias",
       icon: "tag-outline",
-      color: "#ef4444", // vermelho
+      color: "text-light-status-danger dark:text-dark-status-danger",
       onlyIcon: false,
       onPress: () => to.transactions.new(),
     },
@@ -29,7 +28,7 @@ export function ActionButtons() {
       id: "3",
       title: "Objetivos",
       icon: "swap-horizontal-bold",
-      color: "#0ea5e9", // azul
+      color: "text-light-status-info dark:text-dark-status-info",
       onlyIcon: false,
       onPress: () => to.transactions.new(),
     },
@@ -54,10 +53,14 @@ export function ActionButtons() {
         return (
           <Card className={isLast ? "mr-32" : ""}>
             <TouchableOpacity onPress={item.onPress} className="flex-row items-center">
-              <View className="mr-2">
-                <MaterialCommunityIcons name={item.icon as any} size={24} color={item.color} />
+              <View className={`mr-2 ${item.color}`}>
+                <MaterialCommunityIcons name={item.icon as any} size={24} />
               </View>
-              {!item.onlyIcon && <Text className="text-gray-800 font-semibold text-lg">{item.title}</Text>}
+              {!item.onlyIcon && (
+                <Text className="text-light-typography-primary dark:text-dark-typography-primary font-semibold text-lg">
+                  {item.title}
+                </Text>
+              )}
             </TouchableOpacity>
           </Card>
         );

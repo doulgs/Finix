@@ -1,6 +1,5 @@
-import { CustomTabBar } from "@/components/CustomTabBar";
 import { CustomHeader } from "@/components/Headers/CustomHeader";
-import { CustomTabBarPanel } from "@/components/Tabs-Bars/CustomTabBarPanel";
+import { CustomTabBar } from "@/components/Tabs-Bars/CustomTabBar";
 import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
 import { useUserStorage } from "@/storages/useUserStorage";
 import { Octicons } from "@expo/vector-icons";

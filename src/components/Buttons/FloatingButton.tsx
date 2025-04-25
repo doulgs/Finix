@@ -1,7 +1,9 @@
-import { Octicons } from "@expo/vector-icons";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { CustomBackground } from "../Background/CustomBackground";
+
+import { useTheme } from "@/hooks/styles/useTheme";
+import { Octicons } from "@expo/vector-icons";
 
 interface Props {
   iconName?: keyof typeof Octicons.glyphMap;
@@ -10,6 +12,7 @@ interface Props {
 }
 
 function FloatingButton({ iconName, routingIcon, onPress }: Props) {
+  const theme = useTheme();
   return (
     <TouchableOpacity
       activeOpacity={0.7}
@@ -25,7 +28,7 @@ function FloatingButton({ iconName, routingIcon, onPress }: Props) {
           <Octicons
             name={iconName}
             size={28}
-            color="white"
+            color={theme.typography.inverse}
             style={{ transform: [{ rotate: routingIcon ? "45deg" : "0deg" }] }}
           />
         </View>

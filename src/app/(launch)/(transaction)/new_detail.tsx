@@ -1,4 +1,5 @@
 import { MultiOptionSwitch } from "@/components/Buttons/MultiOptionSwitch";
+import { PrimaryButton } from "@/components/Buttons/PrimaryButton";
 import { CustomInput } from "@/components/Inputs/CustomInput";
 import { useTransactionStorage } from "@/storages/useTransactionStorage";
 import { formatToCurrency } from "@/utils/formatToCurrency";
@@ -80,10 +81,10 @@ export default function NewDetail() {
   };
 
   return (
-    <View className="flex-1 bg-background-hover-light dark:bg-background-hover-dark">
+    <View className="flex-1 justify-between bg-light-background-default dark:bg-dark-background-default">
       <ScrollView showsVerticalScrollIndicator={false} className="p-6">
         <View className="mb-4">
-          <Text className="text-textSecondary-light dark:text-textSecondary-dark font-medium mb-1">
+          <Text className="text-light-typography-secondary dark:text-dark-typography-secondary font-medium mb-1">
             Status da Transação
           </Text>
           <Controller
@@ -96,7 +97,7 @@ export default function NewDetail() {
         </View>
 
         <View className="mb-4">
-          <Text className="text-textSecondary-light dark:text-textSecondary-dark font-medium mb-1">
+          <Text className="text-light-typography-secondary dark:text-dark-typography-secondary font-medium mb-1">
             Tipo de Transação
           </Text>
           <Controller
@@ -127,14 +128,10 @@ export default function NewDetail() {
           error={errors.description?.message}
         />
 
-        <TouchableOpacity
+        <PrimaryButton
+          title={showAdditionalFields ? "Ocultar Dados Adicionais" : "Exibir Dados Adicionais"}
           onPress={toggleAdditionalFields}
-          className="bg-primary-light dark:bg-primary-dark rounded-lg py-3 my-4"
-        >
-          <Text className="text-white text-center font-bold text-lg">
-            {showAdditionalFields ? "Ocultar Dados Adicionais" : "Exibir Dados Adicionais"}
-          </Text>
-        </TouchableOpacity>
+        />
 
         <View>
           {showAdditionalFields && (
@@ -219,24 +216,12 @@ export default function NewDetail() {
 
               <CustomInput name="attachments" control={control} type="file" label="Documentos e Imagens" />
 
-              <CustomInput
-                name="notes"
-                label="Notas"
-                control={control}
-                type="area"
-                placeholder="Notas adicionais"
-                numberOfLines={4}
-              />
+              <CustomInput name="notes" label="Notas" control={control} type="area" numberOfLines={4} />
             </View>
           )}
         </View>
 
-        <TouchableOpacity
-          onPress={handleSubmit(onSubmit)}
-          className="bg-primary-light dark:bg-primary-dark rounded-lg py-3 mb-16"
-        >
-          <Text className="text-white text-center font-bold text-lg">Salvar Transação</Text>
-        </TouchableOpacity>
+        <PrimaryButton title="Salvar Transação" onPress={handleSubmit(onSubmit)} />
       </ScrollView>
     </View>
   );

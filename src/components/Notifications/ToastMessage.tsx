@@ -15,10 +15,22 @@ export interface ShowToastProps {
 }
 
 export const TOAST_STYLES = {
-  success: { bg: "bg-green-500", icon: "check-circle" },
-  danger: { bg: "bg-red-500", icon: "exclamation-circle" },
-  info: { bg: "bg-blue-500", icon: "info-circle" },
-  warning: { bg: "bg-orange-400", icon: "exclamation-triangle" },
+  success: {
+    bg: "bg-light-status-success dark:bg-dark-status-success",
+    icon: "check-circle",
+  },
+  danger: {
+    bg: "bg-light-status-danger dark:bg-dark-status-danger",
+    icon: "exclamation-circle",
+  },
+  info: {
+    bg: "bg-light-status-info dark:bg-dark-status-info",
+    icon: "info-circle",
+  },
+  warning: {
+    bg: "bg-light-status-warning dark:bg-dark-status-warning",
+    icon: "exclamation-triangle",
+  },
 };
 
 export interface ToastHandle {
@@ -31,25 +43,18 @@ const ToastMessage = forwardRef<ToastHandle>((_, ref) => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const showToast = (props: ShowToastProps) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
     setToastData(props);
     setIsVisible(true);
 
-    // 🔥 Se o usuário passou um tempo personalizado, usamos ele. Se não, usamos o padrão de 3000ms.
-    const toastTimeout = props.timeout ?? 3000;
-
     timeoutRef.current = setTimeout(() => {
       setIsVisible(false);
-    }, toastTimeout);
+    }, props.timeout ?? 3000);
   };
 
   const closeToast = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setIsVisible(false);
   };
 
@@ -60,35 +65,41 @@ const ToastMessage = forwardRef<ToastHandle>((_, ref) => {
   return (
     <Animated.View
       className={clsx(
-        "absolute w-auto mx-6 max-w-md p-4 flex-row items-center rounded-lg shadow-lg",
+        "absolute mx-6 max-w-md w-auto p-4 flex-row items-center rounded-lg shadow-lg",
         TOAST_STYLES[toastData.type].bg,
         toastData.position === "bottom" ? "bottom-24" : "top-14"
       )}
       entering={FadeInUp.duration(200)}
       exiting={FadeOutUp.duration(200)}
     >
-      <FontAwesome5 name={TOAST_STYLES[toastData.type].icon} size={30} color="#FFF" />
+      <FontAwesome5 name={TOAST_STYLES[toastData.type].icon} size={30} color="#fff" />
       <View className="ml-4 flex-1">
-        <Text className="text-white font-bold text-lg">{toastData.text}</Text>
-        {toastData.description && <Text className="text-white text-sm">{toastData.description}</Text>}
+        <Text className="text-light-typography-inverse dark:text-dark-typography-inverse font-bold text-lg">
+          {toastData.text}
+        </Text>
+        {toastData.description && (
+          <Text className="text-light-typography-inverse dark:text-dark-typography-inverse text-sm">
+            {toastData.description}
+          </Text>
+        )}
       </View>
 
       {toastData.buttonText && (
         <TouchableOpacity
-          className="ml-4 bg-white px-4 py-2 rounded-lg"
+          className="ml-4 bg-light-surface-elevated dark:bg-dark-surface-elevated px-4 py-2 rounded-lg"
           onPress={() => {
-            if (toastData.buttonAction) {
-              toastData.buttonAction();
-            }
+            toastData.buttonAction?.();
             closeToast();
           }}
         >
-          <Text className="text-black font-semibold">{toastData.buttonText}</Text>
+          <Text className="text-light-typography-primary dark:text-dark-typography-primary font-semibold">
+            {toastData.buttonText}
+          </Text>
         </TouchableOpacity>
       )}
 
       <TouchableOpacity className="ml-2" onPress={closeToast}>
-        <FontAwesome5 name="times" size={20} color="#FFF" />
+        <FontAwesome5 name="times" size={20} color="#fff" />
       </TouchableOpacity>
     </Animated.View>
   );

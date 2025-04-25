@@ -1,5 +1,6 @@
 import React from "react";
-import { TextInput, NativeSyntheticEvent, TextInputFocusEventData } from "react-native";
+import { NativeSyntheticEvent, TextInput, TextInputFocusEventData } from "react-native";
+import { useTheme } from "@/hooks/styles/useTheme";
 
 interface InputProps {
   value: string;
@@ -9,15 +10,19 @@ interface InputProps {
   clear?: () => void;
 }
 
-export const NumberInput = ({ value, onChange, onBlur, placeholder }: InputProps) => (
-  <TextInput
-    className="flex-1 text-base text-gray-900 dark:text-white"
-    placeholder={placeholder}
-    onBlur={onBlur}
-    onChangeText={onChange}
-    value={value}
-    keyboardType="numeric"
-    numberOfLines={1}
-    autoCapitalize="none"
-  />
-);
+export const NumberInput = ({ value, onChange, onBlur, placeholder }: InputProps) => {
+  const theme = useTheme();
+  return (
+    <TextInput
+      className="flex-1 text-base text-light-typography-primary dark:text-dark-typography-primary"
+      placeholderTextColor={theme.typography.muted}
+      placeholder={placeholder}
+      onBlur={onBlur}
+      onChangeText={onChange}
+      value={value}
+      keyboardType="numeric"
+      numberOfLines={1}
+      autoCapitalize="none"
+    />
+  );
+};

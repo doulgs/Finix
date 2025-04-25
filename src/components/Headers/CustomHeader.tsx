@@ -3,7 +3,7 @@ import { Image, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
-import { clsx } from "clsx";
+import clsx from "clsx";
 import { CustomBackground } from "@/components/Background/CustomBackground";
 import { takeGreeting } from "@/utils/takeGreeting";
 
@@ -61,32 +61,40 @@ export const CustomHeader: React.FC<StackOrTabHeaderProps> = ({
         <View className="flex-row items-center gap-3">
           {canGoBack && (
             <TouchableOpacity onPress={() => navigation.goBack?.()} className="p-2">
-              <Ionicons name="chevron-back" size={24} color="#FFF" />
+              <Ionicons name="chevron-back" size={24} color="#FFFFFF" />
             </TouchableOpacity>
           )}
 
           {showImageAvatar && (
             <Image
-              source={
-                imageAvatar
-                  ? { uri: imageAvatar } // ou `${imagem}` se já tiver o prefixo
-                  : require("@/assets/image/default-profile.jpg")
-              }
+              source={imageAvatar ? { uri: imageAvatar } : require("@/assets/image/default-profile.jpg")}
               style={{
                 width: 40,
                 height: 40,
                 borderWidth: 1,
                 borderRadius: 8,
                 resizeMode: "cover",
-                borderColor: "#18181b",
+                borderColor: "#18181b", // pode trocar por um token se tiver `stroke.default`
               }}
             />
           )}
 
           <View>
-            <Text className="text-xl font-bold text-white">{title === "Dashboard" ? `${takeGreeting()}` : title}</Text>
-            {subTitle && <Text className="text-sm text-white italic">{subTitle}</Text>}
-            {label && <Text className="text-white text-[10px] italic">{label}</Text>}
+            <Text className="text-xl font-bold text-light-typography-inverse dark:text-dark-typography-inverse">
+              {title === "Dashboard" ? `${takeGreeting()}` : title}
+            </Text>
+
+            {subTitle && (
+              <Text className="text-sm italic text-light-typography-inverse dark:text-dark-typography-inverse">
+                {subTitle}
+              </Text>
+            )}
+
+            {label && (
+              <Text className="text-[10px] italic text-light-typography-inverse dark:text-dark-typography-inverse">
+                {label}
+              </Text>
+            )}
           </View>
         </View>
 

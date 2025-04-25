@@ -7,7 +7,7 @@ import { Card, CardType } from "@/components/Cards";
 import { MonthSelectorCard } from "@/components/Cards/MonthSelectorCard";
 import { formatDateTime } from "@/utils/dateFormatter";
 import { formatToCurrency } from "@/utils/formatToCurrency";
-import { BalanceHeaderSkeleton } from "../Skeleton/BalanceHeaderSkeleton";
+import { BalanceHeaderSkeleton } from "@/components/Skeleton/BalanceHeaderSkeleton";
 
 interface GroupData {
   label_revenue?: string;
@@ -65,20 +65,17 @@ export const BalanceHeader: React.FC<Props> = ({
   summary = {},
   toReceiveToPay = {},
 }) => {
-  // Enable LayoutAnimation on Android
   useEffect(() => {
     if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
   }, []);
 
-  // Formatting
   const handleMonthChange = useCallback((d: Date) => onDateChange(d), [onDateChange]);
   const formattedMonth = useMemo(() => formatDateTime(date, "monthNameLong"), [date]);
   const formattedYear = useMemo(() => formatDateTime(date, "year"), [date]);
   const formattedBalance = useMemo(() => formatToCurrency(balance), [balance]);
 
-  // Destructure groups with defaults
   const {
     label_revenue: sumRevLabel = "Entradas",
     label_expense: sumExpLabel = "Saídas",
@@ -106,9 +103,11 @@ export const BalanceHeader: React.FC<Props> = ({
       <Card className="h-20 mx-auto flex-row items-center px-4">
         <View className="flex-1 flex-row items-center gap-2">
           <View>
-            <Text className="text-zinc-600 text-sm font-medium">Saldo Disponível</Text>
+            <Text className="text-light-typography-muted dark:text-dark-typography-muted text-sm font-medium">
+              Saldo Disponível
+            </Text>
             <Text
-              className="text-zinc-600 text-xl font-extrabold max-w-[110px]"
+              className="text-light-typography-primary dark:text-dark-typography-primary text-xl font-extrabold max-w-[110px]"
               numberOfLines={1}
               adjustsFontSizeToFit
               minimumFontScale={0.85}
@@ -117,15 +116,19 @@ export const BalanceHeader: React.FC<Props> = ({
             </Text>
           </View>
         </View>
-        <View className="w-px h-12 bg-zinc-600 opacity-30 mx-2" />
+        <View className="w-px h-12 bg-light-stroke-default dark:bg-dark-stroke-default opacity-30 mx-2" />
         <TouchableOpacity
           testID="date-selector-button"
           className="items-center mx-2"
           accessibilityRole="button"
           accessibilityLabel="Selecionar mês e ano"
         >
-          <Text className="text-zinc-600 text-xl font-semibold">{formattedMonth}</Text>
-          <Text className="text-zinc-600 text-lg font-semibold">{formattedYear}</Text>
+          <Text className="text-light-typography-primary dark:text-dark-typography-primary text-xl font-semibold">
+            {formattedMonth}
+          </Text>
+          <Text className="text-light-typography-muted dark:text-dark-typography-muted text-lg font-semibold">
+            {formattedYear}
+          </Text>
         </TouchableOpacity>
       </Card>
 

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { ScrollView, RefreshControl } from "react-native";
 
 import { ActionButtons } from "@/components/Banner/ActionButtons";
@@ -11,34 +11,29 @@ export default function Index() {
   const [refreshing, setRefreshing] = useState(false);
   const [releases, setReleases] = useState<any[]>([]);
 
-  // Simulated data fetch
+  // Simulação de busca de dados
   async function fetchData(date: Date) {
-    // Aqui você faria sua chamada à API, e.g.:
-    // const response = await api.getTransactions(date);
-    // return response.data;
     return new Promise((resolve) => setTimeout(() => resolve([]), 1000));
   }
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    // Atualiza a data para o momento atual
     const data = await fetchData(date);
     setReleases(data as any[]);
     setRefreshing(false);
-  }, []);
+  }, [date]);
 
-  // Carrega inicialmente
-  React.useEffect(() => {
+  useEffect(() => {
     onRefresh();
   }, []);
 
   return (
     <ScrollView
-      className="flex-1 bg-zinc-100"
+      className="flex-1 bg-light-background-default dark:bg-dark-background-default"
       showsVerticalScrollIndicator={false}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
-      <BalanceHeader date={date} onDateChange={(newDate) => setDate(newDate)} isLoading={refreshing} />
+      <BalanceHeader date={date} onDateChange={setDate} isLoading={refreshing} />
       <ActionButtons />
       <SummarySlider />
       <LatestReleases data={releases} />

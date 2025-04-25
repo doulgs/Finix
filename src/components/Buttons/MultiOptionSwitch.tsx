@@ -1,4 +1,3 @@
-// components/Buttons/MultiOptionSwitch.tsx
 import { View, Text, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
@@ -6,7 +5,7 @@ import clsx from "clsx";
 interface MultiOptionSwitchProps {
   options: string[];
   defaultSelected?: string;
-  selected?: string; // Valor controlado externamente
+  selected?: string;
   onChange?: (selected: string) => void;
 }
 
@@ -38,12 +37,15 @@ function MultiOptionSwitch({ options, defaultSelected, selected: selectedProp, o
           <TouchableOpacity
             key={index}
             className={clsx(
-              "flex-1 py-3 rounded-lg items-center border border-border-light dark:border-border-dark",
-              isSelected ? "bg-primary-light dark:bg-primary-dark" : "bg-gray-200 dark:bg-[#404040]"
+              "flex-1 py-3 rounded-lg items-center border",
+              "border-light-stroke-default dark:border-dark-stroke-default",
+              isSelected
+                ? "bg-light-brand-primary dark:bg-dark-brand-primary"
+                : "bg-light-background-muted dark:bg-dark-background-muted"
             )}
             onPress={() => handlePress(option)}
           >
-            <Text className={clsx("font-bold", isSelected ? "text-white" : "text-black dark:text-gray-300")}>
+            <Text className={clsx("font-bold text-light-typography-primary dark:text-dark-typography-primary")}>
               {option}
             </Text>
           </TouchableOpacity>

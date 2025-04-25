@@ -1,5 +1,6 @@
 import React from "react";
-import { TextInput, NativeSyntheticEvent, TextInputFocusEventData } from "react-native";
+import { NativeSyntheticEvent, TextInput, TextInputFocusEventData } from "react-native";
+import { useTheme } from "@/hooks/styles/useTheme";
 
 interface InputProps {
   value: string;
@@ -16,13 +17,15 @@ function formatCurrency(value: string) {
 }
 
 export const CurrencyInput = ({ value, onChange, onBlur, placeholder }: InputProps) => {
+  const theme = useTheme();
   const handleChange = (text: string) => {
     onChange(formatCurrency(text));
   };
 
   return (
     <TextInput
-      className="flex-1 text-base text-gray-900 dark:text-white"
+      className="flex-1 text-light-typography-primary dark:text-dark-typography-primary text-base"
+      placeholderTextColor={theme.typography.muted}
       placeholder={placeholder || "R$ 0,00"}
       onBlur={onBlur}
       onChangeText={handleChange}

@@ -42,10 +42,17 @@ export const DateInput = ({ value, onChange, placeholder }: DateInputProps) => {
   return (
     <>
       <TouchableOpacity className="flex-1 flex-row items-center justify-between px-1" onPress={openModal}>
-        <Text className={clsx("flex-1 text-base", value ? "text-gray-900 dark:text-white" : "text-gray-500")}>
+        <Text
+          className={clsx(
+            "flex-1 text-base",
+            value
+              ? "text-light-typography-primary dark:text-dark-typography-primary"
+              : "text-light-typography-muted dark:text-dark-typography-muted"
+          )}
+        >
           {value ? formatDisplay(value) : placeholder || "Selecionar data"}
         </Text>
-        <Ionicons name="chevron-down" size={20} color="#666" />
+        <Ionicons name="chevron-down" size={20} color="#9CA3AF" />
       </TouchableOpacity>
 
       <BottomSheetModal
@@ -54,13 +61,13 @@ export const DateInput = ({ value, onChange, placeholder }: DateInputProps) => {
         snapPoints={snapPoints}
         backdropComponent={renderBackdrop}
         enableDismissOnClose
-        enableContentPanningGesture={false} // impede o gesto de arrastar o conteúdo
-        enableHandlePanningGesture={false} // impede o gesto de arrastar pela alça
+        enableContentPanningGesture={false}
+        enableHandlePanningGesture={false}
         backgroundStyle={{
-          backgroundColor: "#fff",
+          backgroundColor: "#FFFFFF",
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
-          borderColor: "#e5e7eb",
+          borderColor: "#D1D5DB", // equivalente a stroke.default
           borderWidth: 1,
         }}
       >
@@ -71,11 +78,16 @@ export const DateInput = ({ value, onChange, placeholder }: DateInputProps) => {
               closeModal();
             }}
             markedDates={{
-              [value]: { selected: true, selectedColor: "#FF941A" },
+              [value]: { selected: true, selectedColor: "#FF941A" }, // brand.primary
             }}
           />
-          <TouchableOpacity onPress={closeModal} className="bg-primary-light dark:bg-primary-dark py-3 mt-4">
-            <Text className="text-white text-center font-semibold text-lg">Fechar</Text>
+          <TouchableOpacity
+            onPress={closeModal}
+            className="bg-light-brand-primary dark:bg-dark-brand-primary py-3 mt-4 rounded-xl"
+          >
+            <Text className="text-light-typography-inverse dark:text-dark-typography-inverse text-center font-semibold text-lg">
+              Fechar
+            </Text>
           </TouchableOpacity>
         </BottomSheetView>
       </BottomSheetModal>

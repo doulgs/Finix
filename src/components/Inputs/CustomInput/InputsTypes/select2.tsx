@@ -2,7 +2,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
 import clsx from "clsx";
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, useColorScheme } from "react-native";
+import { colors as tokens } from "@/styles/colors"; // Ajuste conforme necessário
 
 export type DropdownItem = {
   label: string;
@@ -22,9 +23,12 @@ export const Select2Input = ({
   value,
   onChange,
   placeholder = "Selecione",
-  options = [], // ← valor padrão para evitar undefined
+  options = [],
   title = "Selecionar uma opção",
 }: Select2Props) => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "dark" ? tokens.dark : tokens.light;
+
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ["40%", "60%", "80%", "95%"], []);
   const [selected, setSelected] = useState(value);
@@ -50,24 +54,37 @@ export const Select2Input = ({
       const isSelected = item.value === selected;
       return (
         <TouchableOpacity
-          className="flex-row justify-between items-center px-4 py-3 border-b border-gray-200"
+          className="flex-row justify-between items-center px-4 py-3"
+          style={{
+            borderBottomWidth: 1,
+            borderBottomColor: theme.stroke.default,
+          }}
           onPress={() => handleSelect(item)}
         >
-          <Text className="text-base text-black">{item.label}</Text>
-          {isSelected && <Ionicons name="checkmark" size={20} color="#FF941A" />}
+          <Text style={{ color: theme.typography.primary, fontSize: 16 }}>{item.label}</Text>
+          {isSelected && <Ionicons name="checkmark" size={20} color={theme.brand.primary} />}
         </TouchableOpacity>
       );
     },
-    [selected]
+    [selected, theme]
   );
+
+  const selectedLabel = options.find((o) => o.value === value)?.label || placeholder;
 
   return (
     <>
       <TouchableOpacity className="flex-1 flex-row items-center justify-between px-1" onPress={openModal}>
-        <Text className={clsx("flex-1 text-base", value ? "text-gray-900 dark:text-white" : "text-gray-500")}>
-          {options.find((o) => o.value === value)?.label || placeholder}
+        <Text
+          className={clsx("flex-1 text-base")}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          style={{
+            color: value ? theme.typography.primary : theme.typography.muted,
+          }}
+        >
+          {selectedLabel}
         </Text>
-        <Ionicons name="chevron-down" size={20} color="#666" />
+        <Ionicons name="chevron-down" size={20} color={theme.typography.muted} />
       </TouchableOpacity>
 
       <BottomSheetModal
@@ -77,25 +94,42 @@ export const Select2Input = ({
         backdropComponent={renderBackdrop}
         enableDismissOnClose
         backgroundStyle={{
-          backgroundColor: "#f3f4f6",
+          backgroundColor: theme.background.muted,
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
-          borderColor: "#8c8c8c",
+          borderColor: theme.stroke.default,
           borderWidth: 1,
         }}
       >
-        <View className="flex-row items-center justify-between px-4 py-3 border-b border-gray-300">
-          <Text className="font-bold text-xl text-black">{title}</Text>
-          <TouchableOpacity className="bg-primary-light dark:bg-primary-dark p-2 rounded-lg" onPress={closeModal}>
-            <Text className="text-white text-center font-semibold text-base">Confirmar</Text>
+        <View
+          className="flex-row items-center justify-between px-4 py-3"
+          style={{ borderBottomColor: theme.stroke.default, borderBottomWidth: 1 }}
+        >
+          <Text className="font-bold text-xl" style={{ color: theme.typography.primary }}>
+            {title}
+          </Text>
+          <TouchableOpacity
+            style={{
+              backgroundColor: theme.brand.primary,
+              padding: 8,
+              borderRadius: 8,
+            }}
+            onPress={closeModal}
+          >
+            <Text
+              style={{
+                color: theme.typography.inverse,
+                fontWeight: "600",
+                fontSize: 16,
+                textAlign: "center",
+              }}
+            >
+              Confirmar
+            </Text>
           </TouchableOpacity>
         </View>
 
-        <BottomSheetFlatList
-          data={options ?? []} // ← segurança extra
-          keyExtractor={(item) => item.value}
-          renderItem={renderItem}
-        />
+        <BottomSheetFlatList data={options} keyExtractor={(item) => item.value} renderItem={renderItem} />
       </BottomSheetModal>
     </>
   );

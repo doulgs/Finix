@@ -1,11 +1,13 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, useColorScheme } from "react-native";
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import { Ionicons } from "@expo/vector-icons";
 import clsx from "clsx";
 
 import ColorPicker, { Panel1, HueSlider, Preview } from "reanimated-color-picker";
 import { useSharedValue } from "react-native-reanimated";
+
+import { colors as tokens } from "@/styles/colors"; // ajuste conforme necessário
 
 type CustomColorPickerProps = {
   value: string;
@@ -15,9 +17,11 @@ type CustomColorPickerProps = {
 };
 
 export function SelectColor({ value, onChange, placeholder = "Selecionar cor" }: CustomColorPickerProps) {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "dark" ? tokens.dark : tokens.light;
+
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ["60%"], []);
-
   const selectedColorValue = useSharedValue(value);
 
   const openModal = () => bottomSheetModalRef.current?.present();
@@ -36,7 +40,15 @@ export function SelectColor({ value, onChange, placeholder = "Selecionar cor" }:
 
   return (
     <>
-      <TouchableOpacity className="flex-1 flex-row items-center justify-between rounded-lg h-10" onPress={openModal}>
+      <TouchableOpacity
+        className="flex-1 flex-row items-center justify-between rounded-lg h-10 px-2"
+        onPress={openModal}
+        style={{
+          backgroundColor: theme.surface.input,
+          borderWidth: 1,
+          borderColor: theme.stroke.default,
+        }}
+      >
         <View
           style={{
             width: 30,
@@ -45,15 +57,15 @@ export function SelectColor({ value, onChange, placeholder = "Selecionar cor" }:
             marginRight: 10,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: value || "#f3f4f6", // cor atual ou cinza padrão
+            backgroundColor: value || theme.background.muted,
           }}
         >
-          <Ionicons name="color-palette-outline" size={20} color={value ? "#fff" : "#666"} />
+          <Ionicons name="color-palette-outline" size={20} color={value ? "#fff" : theme.typography.muted} />
         </View>
-        <Text className={clsx("flex-1 text-base font-medium text-gray-600")} numberOfLines={1}>
+        <Text className="flex-1 text-base font-medium" style={{ color: theme.typography.primary }} numberOfLines={1}>
           {value || placeholder}
         </Text>
-        <Ionicons name="chevron-down" size={20} color={!value ? "#fff" : "#666"} />
+        <Ionicons name="chevron-down" size={20} color={theme.typography.muted} />
       </TouchableOpacity>
 
       <BottomSheetModal
@@ -63,16 +75,18 @@ export function SelectColor({ value, onChange, placeholder = "Selecionar cor" }:
         backdropComponent={renderBackdrop}
         enableDismissOnClose
         backgroundStyle={{
-          backgroundColor: "#f3f4f6",
+          backgroundColor: theme.background.muted,
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
-          borderColor: "#8c8c8c",
+          borderColor: theme.stroke.default,
           borderWidth: 1,
         }}
       >
         <BottomSheetView>
           <View className="px-4 py-4">
-            <Text className="font-bold text-xl text-black mb-4">Selecionar Cor</Text>
+            <Text className="font-bold text-xl mb-4" style={{ color: theme.typography.primary }}>
+              Selecionar Cor
+            </Text>
 
             <ColorPicker
               value={value}
@@ -92,9 +106,24 @@ export function SelectColor({ value, onChange, placeholder = "Selecionar cor" }:
 
             <TouchableOpacity
               onPress={closeModal}
-              className="mt-3 bg-primary-light dark:bg-primary-dark py-4 rounded-xl items-center border border-border-light dark:border-border-dark"
+              style={{
+                backgroundColor: theme.brand.primary,
+                paddingVertical: 16,
+                borderRadius: 16,
+                alignItems: "center",
+                borderWidth: 1,
+                borderColor: theme.stroke.default,
+              }}
             >
-              <Text className="text-white font-semibold text-lg">Confirmar cor</Text>
+              <Text
+                style={{
+                  color: theme.typography.inverse,
+                  fontWeight: "600",
+                  fontSize: 18,
+                }}
+              >
+                Confirmar cor
+              </Text>
             </TouchableOpacity>
           </View>
         </BottomSheetView>

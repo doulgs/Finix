@@ -1,7 +1,8 @@
 import React from "react";
-import { TextInput, NativeSyntheticEvent, TextInputFocusEventData, TextInputProps } from "react-native";
+import { NativeSyntheticEvent, TextInput, TextInputFocusEventData, TextInputProps } from "react-native";
+import { useTheme } from "@/hooks/styles/useTheme";
 
-interface EmailInputProps {
+interface EmailInputProps extends Omit<TextInputProps, "onChange" | "onBlur" | "value"> {
   value: string;
   onChange: (text: string) => void;
   onBlur: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
@@ -10,9 +11,11 @@ interface EmailInputProps {
 }
 
 export const EmailInput = ({ value, onChange, onBlur, placeholder, ...rest }: EmailInputProps) => {
+  const theme = useTheme();
   return (
     <TextInput
-      className="flex-1 text-base text-gray-900 dark:text-white"
+      className="flex-1 text-base text-light-typography-primary dark:text-dark-typography-primary"
+      placeholderTextColor={theme.typography.muted}
       keyboardType="email-address"
       autoCapitalize="none"
       autoCorrect={false}

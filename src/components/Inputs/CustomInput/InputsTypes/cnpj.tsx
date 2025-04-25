@@ -1,5 +1,6 @@
 import React from "react";
-import { TextInput, NativeSyntheticEvent, TextInputFocusEventData } from "react-native";
+import { NativeSyntheticEvent, TextInput, TextInputFocusEventData } from "react-native";
+import { useTheme } from "@/hooks/styles/useTheme";
 
 interface InputProps {
   value: string;
@@ -20,13 +21,15 @@ function applyCnpjMask(text: string) {
 }
 
 export const CNPJInput = ({ value, onChange, onBlur, placeholder }: InputProps) => {
+  const theme = useTheme();
   const handleChange = (text: string) => {
     onChange(applyCnpjMask(text));
   };
 
   return (
     <TextInput
-      className="flex-1 text-base text-gray-900 dark:text-white"
+      className="flex-1 text-light-typography-primary dark:text-dark-typography-primary text-base"
+      placeholderTextColor={theme.typography.muted}
       placeholder={placeholder || "00.000.000/0000-00"}
       onBlur={onBlur}
       onChangeText={handleChange}

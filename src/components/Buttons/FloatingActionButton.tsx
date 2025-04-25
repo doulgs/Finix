@@ -85,10 +85,7 @@ export const FloatingActionButton = ({ icon, actions }: Props) => {
             pointerEvents="auto"
             style={[
               StyleSheet.absoluteFillObject,
-              {
-                backgroundColor: "rgba(0,0,0,0.3)",
-                zIndex: 10,
-              },
+              { backgroundColor: "rgba(0,0,0,0.3)", zIndex: 10 },
               animatedOverlayStyle,
             ]}
           />
@@ -104,9 +101,7 @@ export const FloatingActionButton = ({ icon, actions }: Props) => {
 
           const animatedButtonStyle = useAnimatedStyle(() => ({
             transform: [
-              {
-                translateY: interpolate(animation.value, [0, 1], [0, -offset]),
-              },
+              { translateY: interpolate(animation.value, [0, 1], [0, -offset]) },
               { scale: interpolate(animation.value, [0, 1], [0, 1]) },
             ],
             opacity: animation.value,
@@ -116,11 +111,7 @@ export const FloatingActionButton = ({ icon, actions }: Props) => {
             const width = measuredWidths[index];
             return {
               width: interpolate(labelAnims[index].value, [0, 1], [0, width]),
-              transform: [
-                {
-                  translateX: interpolate(labelAnims[index].value, [0, 1], [width / 2, 0]),
-                },
-              ],
+              transform: [{ translateX: interpolate(labelAnims[index].value, [0, 1], [width / 2, 0]) }],
               opacity: labelAnims[index].value,
             };
           });
@@ -134,7 +125,9 @@ export const FloatingActionButton = ({ icon, actions }: Props) => {
               <>
                 {measuredWidths[index] === 0 && (
                   <View
-                    className="mr-2 py-1 px-3 bg-white rounded-lg border border-orange-500 absolute right-16 opacity-0"
+                    className="mr-2 py-1 px-3 rounded-lg border absolute right-16 opacity-0
+                               bg-light-surface-card dark:bg-dark-surface-card
+                               border-light-brand-primary dark:border-dark-brand-primary"
                     onLayout={(e) => {
                       const measuredWidth = e.nativeEvent.layout.width;
                       if (measuredWidth > 0) {
@@ -146,7 +139,7 @@ export const FloatingActionButton = ({ icon, actions }: Props) => {
                       }
                     }}
                   >
-                    <Text numberOfLines={1} ellipsizeMode="tail" className="text-orange-500 font-semibold">
+                    <Text className="text-light-brand-primary dark:text-dark-brand-primary font-semibold">
                       {item.label}
                     </Text>
                   </View>
@@ -155,9 +148,11 @@ export const FloatingActionButton = ({ icon, actions }: Props) => {
                 {measuredWidths[index] > 0 && (
                   <Animated.View
                     style={animatedLabelStyle}
-                    className="mr-2 py-1 px-3 bg-white rounded-lg border border-orange-500 absolute right-16 overflow-hidden"
+                    className="mr-2 py-1 px-3 rounded-lg border absolute right-16 overflow-hidden
+                               bg-light-surface-card dark:bg-dark-surface-card
+                               border-light-brand-primary dark:border-dark-brand-primary"
                   >
-                    <Text numberOfLines={1} ellipsizeMode="tail" className="text-orange-500 font-semibold">
+                    <Text className="text-light-brand-primary dark:text-dark-brand-primary font-semibold">
                       {item.label}
                     </Text>
                   </Animated.View>
@@ -172,7 +167,9 @@ export const FloatingActionButton = ({ icon, actions }: Props) => {
               >
                 <Animated.View
                   style={animatedMainButtonIconStyle}
-                  className="w-14 h-14 mr-1 rounded-xl items-center justify-center border border-orange-500 bg-white/90 overflow-hidden"
+                  className="w-14 h-14 mr-1 rounded-xl items-center justify-center overflow-hidden
+                             border border-light-brand-primary dark:border-dark-brand-primary
+                             bg-light-surface-card/90 dark:bg-dark-surface-card/90"
                 >
                   <CustomBackground
                     source={require("../../assets/image/square-orange.png")}
@@ -188,11 +185,13 @@ export const FloatingActionButton = ({ icon, actions }: Props) => {
           );
         })}
 
-        {/* BOTÃO PRINCIPAL */}
+        {/* MAIN BUTTON */}
         <TouchableOpacity onPress={toggleMenu}>
           <Animated.View
             style={animatedMainButtonIconStyle}
-            className="w-16 h-16 rounded-xl items-center justify-center border border-orange-500 bg-white/90 overflow-hidden"
+            className="w-16 h-16 rounded-xl items-center justify-center overflow-hidden
+                       border border-light-brand-primary dark:border-dark-brand-primary
+                       bg-light-surface-card/90 dark:bg-dark-surface-card/90"
           >
             <CustomBackground
               source={require("../../assets/image/square-orange.png")}

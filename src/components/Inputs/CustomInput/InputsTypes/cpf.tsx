@@ -1,5 +1,6 @@
 import React from "react";
-import { TextInput, NativeSyntheticEvent, TextInputFocusEventData } from "react-native";
+import { NativeSyntheticEvent, TextInput, TextInputFocusEventData } from "react-native";
+import { useTheme } from "@/hooks/styles/useTheme";
 
 interface InputProps {
   value: string;
@@ -19,13 +20,15 @@ function applyCpfMask(text: string) {
 }
 
 export const CPFInput = ({ value, onChange, onBlur, placeholder }: InputProps) => {
+  const theme = useTheme();
   const handleChange = (text: string) => {
     onChange(applyCpfMask(text));
   };
 
   return (
     <TextInput
-      className="flex-1 text-base text-gray-900 dark:text-white"
+      className="flex-1 text-light-typography-primary dark:text-dark-typography-primary text-base"
+      placeholderTextColor={theme.typography.muted}
       placeholder={placeholder || "000.000.000-00"}
       onBlur={onBlur}
       onChangeText={handleChange}

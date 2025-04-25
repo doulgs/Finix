@@ -42,19 +42,22 @@ export const AccountsSummary = forwardRef<AccountsSummaryHandle, Props>(({ data 
       : itemHeight * Math.min(data.length, collapsedCount);
   }, [expanded, data]);
 
-  // 🔁 Ref para permitir recolher de fora
   useImperativeHandle(ref, () => ({
     collapse: () => setExpanded(false),
   }));
 
   return (
-    <Card className="mx-4 my-2 rounded-2xl bg-white shadow-md">
+    <Card className="mx-4 my-2 rounded-2xl bg-light-surface-card dark:bg-dark-surface-card shadow-md">
       <View className="w-full mb-4 flex-row justify-between items-center">
-        <Text className="text-black font-semibold text-xl">Resumo por Conta</Text>
+        <Text className="text-light-typography-primary dark:text-dark-typography-primary font-semibold text-xl">
+          Resumo por Conta
+        </Text>
 
         {data && data.length > collapsedCount && (
           <TouchableOpacity onPress={() => setExpanded((prev) => !prev)}>
-            <Text className="text-primary-light font-bold text-sm">{expanded ? "Mostrar menos" : "Mostrar mais"}</Text>
+            <Text className="text-light-brand-primary dark:text-dark-brand-primary font-bold text-sm">
+              {expanded ? "Mostrar menos" : "Mostrar mais"}
+            </Text>
           </TouchableOpacity>
         )}
       </View>
@@ -62,7 +65,9 @@ export const AccountsSummary = forwardRef<AccountsSummaryHandle, Props>(({ data 
       {!data || data.length === 0 ? (
         <View className="items-center justify-center">
           <NoSearchData height={100} width={100} />
-          <Text className="text-gray-500 font-medium text-base pb-4">Nenhuma conta encontrada.</Text>
+          <Text className="text-light-typography-muted dark:text-dark-typography-muted font-medium text-base pb-4">
+            Nenhuma conta encontrada.
+          </Text>
         </View>
       ) : (
         <Animated.View style={[animatedStyle, { overflow: "hidden" }]}>
@@ -73,21 +78,31 @@ export const AccountsSummary = forwardRef<AccountsSummaryHandle, Props>(({ data 
                 entering={FadeInDown.delay(index * 60).duration(300)}
                 exiting={FadeOutUp.duration(200)}
               >
-                <View className="flex-row justify-between items-center bg-gray-100 rounded-xl px-2 py-3">
+                <View className="flex-row justify-between items-center bg-light-surface-muted dark:bg-dark-surface-muted rounded-xl px-2 py-3">
                   <View className="flex-row items-center">
-                    <View className="w-10 h-10 rounded-xl bg-gray-200 items-center justify-center mr-2">
-                      <Text className="text-gray-800 font-bold text-lg">{acc.name.charAt(0).toUpperCase()}</Text>
+                    <View className="w-10 h-10 rounded-xl bg-light-surface-elevated dark:bg-dark-surface-elevated items-center justify-center mr-2">
+                      <Text className="text-light-typography-primary dark:text-dark-typography-primary font-bold text-lg">
+                        {acc.name.charAt(0).toUpperCase()}
+                      </Text>
                     </View>
 
                     <View>
-                      <Text className="text-gray-800 font-medium text-base">{acc.name}</Text>
-                      <Text className="text-gray-400 text-xs">Entradas & Saídas</Text>
+                      <Text className="text-light-typography-primary dark:text-dark-typography-primary font-medium text-base">
+                        {acc.name}
+                      </Text>
+                      <Text className="text-light-typography-muted dark:text-dark-typography-muted text-xs">
+                        Entradas & Saídas
+                      </Text>
                     </View>
                   </View>
 
                   <View className="items-end">
-                    <Text className="text-green-500 font-semibold text-sm">+ {formatToCurrency(acc.income)}</Text>
-                    <Text className="text-red-500 font-semibold text-sm">- {formatToCurrency(acc.expense)}</Text>
+                    <Text className="text-light-status-success dark:text-dark-status-success font-semibold text-sm">
+                      + {formatToCurrency(acc.income)}
+                    </Text>
+                    <Text className="text-light-status-danger dark:text-dark-status-danger font-semibold text-sm">
+                      - {formatToCurrency(acc.expense)}
+                    </Text>
                   </View>
                 </View>
               </Animated.View>

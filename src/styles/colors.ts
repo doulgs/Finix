@@ -27,8 +27,8 @@ export const colors = {
       success: "#16A34A",
     },
     stroke: {
-      default: "#D1D5DB",
-      strong: "#9CA3AF",
+      default: "#9CA3AF",
+      strong: "#505763",
       focus: "#FF941A",
       danger: "#EF4444",
     },
@@ -52,44 +52,44 @@ export const colors = {
       secondary: "#ff7c4c",
     },
     status: {
-      success: "#4ADE80",
-      warning: "#FBBF24",
-      danger: "#F87171",
-      info: "#60A5FA",
+      success: "#22C55E",
+      warning: "#EAB308",
+      danger: "#EF4444",
+      info: "#3B82F6",
     },
     background: {
-      default: "#0F0F0F",
-      muted: "#18181B",
-      elevated: "#1F1F23",
-      alt: "#262626",
+      default: "#1E1E1E", // Cor base da interface (similar ao fundo do ChatGPT)
+      muted: "#2A2A2A", // Elementos secundários (como cards ou painéis)
+      elevated: "#262626", // Superfícies elevadas ou destaques
+      alt: "#333333", // Alternativo para headers ou linhas
     },
     typography: {
-      primary: "#F9FAFB",
-      secondary: "#D1D5DB",
-      muted: "#9CA3AF",
-      subtle: "#6B7280",
+      primary: "#F9FAFB", // Branco suave (não puro)
+      secondary: "#D4D4D8", // Cinza claro
+      muted: "#A1A1AA", // Cinza médio para infos
+      subtle: "#71717A", // Cinza escuro para dicas
       inverse: "#000000",
-      brand: "#FF941A",
+      brand: "#FF941A", // Destaque com sua cor
       danger: "#FCA5A5",
       success: "#86EFAC",
     },
     stroke: {
-      default: "#4B5563",
-      strong: "#6B7280",
-      focus: "#FFB84D",
+      default: "#3F3F46", // Bordas sutis
+      strong: "#52525B", // Bordas destacadas
+      focus: "#FF941A", // Foco com sua identidade
       danger: "#F87171",
     },
     surface: {
-      card: "#1F2937",
-      sheet: "#111827",
-      input: "#1C1C1E",
-      hover: "#2A2A2A",
-      pressed: "#333333",
+      card: "#262626", // Cards e containers
+      sheet: "#1F1F1F", // Sheets, modals, etc.
+      input: "#2E2E2E", // Campos de input
+      hover: "#3A3A3A", // Hover sobre qualquer item
+      pressed: "#4B4B4B", // Pressed feedback
     },
     overlay: {
-      light: "rgba(255, 255, 255, 0.04)",
-      medium: "rgba(255, 255, 255, 0.1)",
-      heavy: "rgba(255, 255, 255, 0.25)",
+      light: "rgba(255, 255, 255, 0.03)",
+      medium: "rgba(255, 255, 255, 0.07)",
+      heavy: "rgba(255, 255, 255, 0.15)",
     },
   },
 };

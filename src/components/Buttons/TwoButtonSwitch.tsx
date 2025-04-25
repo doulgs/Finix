@@ -23,24 +23,44 @@ function TwoButtonSwitch({ option1, option2, defaultSelected = "option1", onChan
     <View className="flex-row items-center justify-center gap-3">
       <TouchableOpacity
         className={clsx(
-          "flex-1 py-3 rounded-lg items-center border border-border-light dark:border-border-dark",
-          selected === "option1" ? "bg-primary-light dark:bg-primary-dark" : "bg-gray-200 dark:bg-[#404040]"
+          "flex-1 py-3 rounded-lg items-center border",
+          "border-light-stroke-default dark:border-dark-stroke-default",
+          selected === "option1"
+            ? "bg-light-brand-primary dark:bg-dark-brand-primary"
+            : "bg-light-surface-muted dark:bg-dark-surface-muted"
         )}
         onPress={() => handlePress("option1")}
       >
-        <Text className={clsx("font-bold", selected === "option1" ? "text-white" : "text-black dark:text-gray-300")}>
+        <Text
+          className={clsx(
+            "font-bold",
+            selected === "option1"
+              ? "text-light-typography-inverse dark:text-dark-typography-inverse"
+              : "text-light-typography-primary dark:text-dark-typography-primary"
+          )}
+        >
           {option1}
         </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         className={clsx(
-          "flex-1 py-3 rounded-lg items-center border border-border-light dark:border-border-dark",
-          selected === "option2" ? "bg-primary-light dark:bg-primary-dark" : "bg-gray-200 dark:bg-[#404040]"
+          "flex-1 py-3 rounded-lg items-center border",
+          "border-light-stroke-default dark:border-dark-stroke-default",
+          selected === "option2"
+            ? "bg-light-brand-primary dark:bg-dark-brand-primary"
+            : "bg-light-surface-muted dark:bg-dark-surface-muted"
         )}
         onPress={() => handlePress("option2")}
       >
-        <Text className={clsx("font-bold", selected === "option2" ? "text-white" : "text-black dark:text-gray-300")}>
+        <Text
+          className={clsx(
+            "font-bold",
+            selected === "option2"
+              ? "text-light-typography-inverse dark:text-dark-typography-inverse"
+              : "text-light-typography-primary dark:text-dark-typography-primary"
+          )}
+        >
           {option2}
         </Text>
       </TouchableOpacity>

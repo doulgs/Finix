@@ -1,5 +1,6 @@
 import { LogoFinix } from "@/assets/svg/LogoFinix";
 import { CustomBackground } from "@/components/Background/CustomBackground";
+import { PrimaryButton } from "@/components/Buttons/PrimaryButton";
 import { CustomInput } from "@/components/Inputs/CustomInput";
 import { useLoading } from "@/context/LoadingContext";
 import { useToast } from "@/context/ToastContext";
@@ -80,15 +81,15 @@ export default function Login() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          <View className="flex-1 justify-center items-center bg-background-light/10 dark:bg-background-dark/25 px-4 py-8">
-            <View className="w-full bg-card-light dark:bg-card-dark p-6 rounded-3xl shadow-lg border border-border-light dark:border-border-dark">
+          <View className="flex-1 justify-center items-center px-4 py-8">
+            <View className="w-full bg-light-background-default dark:bg-dark-background-default p-6 rounded-3xl shadow-lg border border-border-light dark:border-border-dark">
               <View className="flex-row items-center gap-2 justify-center">
                 <LogoFinix />
-                <Text className="text-primary-light dark:text-primary-dark text-center mt-4 text-5xl font-bold">
+                <Text className="text-light-brand-primary dark:text-dark-brand-primary text-center mt-4 text-5xl font-bold">
                   Finix
                 </Text>
               </View>
-              <Text className="text-text-light dark:text-text-dark text-center font-medium my-2">
+              <Text className="text-light-brand-secondary dark:text-dark-brand-secondary text-center font-medium my-2">
                 Uma nova forma de enxergar sua saúde financeira de forma inteligente e sem complicações.
               </Text>
 
@@ -118,17 +119,14 @@ export default function Login() {
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity
-                onPress={handleSubmit(onSubmit)}
-                className="bg-primary-light dark:bg-primary-dark rounded-lg py-3 mt-4"
-              >
-                <Text className="text-white text-center font-semibold text-lg">Acessar</Text>
-              </TouchableOpacity>
+              <PrimaryButton title="Acessar" onPress={handleSubmit(onSubmit)} />
 
               <TouchableOpacity onPress={() => to.register()}>
                 <View className="flex-row justify-center mt-4">
                   <Text className="text-gray-600 dark:text-gray-300 text-sm">Ainda não tem uma conta? </Text>
-                  <Text className="text-primary-light dark:text-primary-dark font-semibold text-sm">Crie agora</Text>
+                  <Text className="text-light-brand-secondary dark:text-dark-brand-secondary font-semibold text-sm">
+                    Crie agora
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>

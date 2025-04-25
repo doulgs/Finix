@@ -10,7 +10,7 @@ export default function ProfileScreen() {
   const { signOut } = useUserRepository();
 
   return (
-    <ScrollView className="flex-1 bg-white p-4">
+    <ScrollView className="flex-1 bg-light-background-default dark:bg-dark-background-default p-4">
       {/* Cabeçalho */}
       <View className="flex-row mb-6 gap-4">
         <Image

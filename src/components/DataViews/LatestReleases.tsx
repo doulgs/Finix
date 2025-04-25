@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import clsx from "clsx";
 import { formatToCurrency } from "@/utils/formatToCurrency";
 import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
-import { Card } from "../Cards";
+import { Card } from "@/components/Cards";
 import { Feather } from "@expo/vector-icons";
 import { formatDateTime } from "@/utils/dateFormatter";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming, FadeInDown, FadeOutUp } from "react-native-reanimated";
@@ -60,13 +60,17 @@ export function LatestReleases({ data }: Props) {
   }, [expanded, data]);
 
   return (
-    <Card className="mx-4 mt-4 mb-2 rounded-2xl bg-white shadow-md">
+    <Card className="mx-4 mt-4 mb-2 rounded-2xl bg-light-surface-card dark:bg-dark-surface-card shadow-md">
       <View className="w-full mb-4 flex-row justify-between items-center">
-        <Text className="text-black font-semibold text-xl">Transações recentes</Text>
+        <Text className="text-light-typography-primary dark:text-dark-typography-primary font-semibold text-xl">
+          Transações recentes
+        </Text>
 
         {data && data.length > collapsedCount && (
           <TouchableOpacity onPress={() => setExpanded((prev) => !prev)}>
-            <Text className="text-primary-light font-bold text-sm">{expanded ? "Mostrar menos" : "Mostrar mais"}</Text>
+            <Text className="text-light-brand-primary dark:text-dark-brand-primary font-bold text-sm">
+              {expanded ? "Mostrar menos" : "Mostrar mais"}
+            </Text>
           </TouchableOpacity>
         )}
       </View>
@@ -74,7 +78,9 @@ export function LatestReleases({ data }: Props) {
       {!data || data.length === 0 ? (
         <View className="items-center justify-center">
           <NoSearchData height={100} width={100} />
-          <Text className="text-gray-500 font-medium text-base pb-4">Nenhuma transação encontrada.</Text>
+          <Text className="text-light-typography-muted dark:text-dark-typography-muted font-medium text-base pb-4">
+            Nenhuma transação encontrada.
+          </Text>
         </View>
       ) : (
         <Animated.View style={[animatedStyle, { overflow: "hidden" }]}>
@@ -90,21 +96,34 @@ export function LatestReleases({ data }: Props) {
                   entering={FadeInDown.delay(index * 60).duration(300)}
                   exiting={FadeOutUp.duration(200)}
                 >
-                  <View className="flex-row items-center justify-between bg-gray-100 rounded-xl px-2 py-3">
+                  <View className="flex-row items-center justify-between bg-light-surface-muted dark:bg-dark-surface-muted rounded-xl px-2 py-3">
                     <View className="flex-row items-center">
-                      <View className="w-10 h-10 rounded-xl bg-gray-200 items-center justify-center mr-2">
+                      <View className="w-10 h-10 rounded-xl bg-light-surface-elevated dark:bg-dark-surface-elevated items-center justify-center mr-2">
                         <Feather name={iconName} size={20} color={iconColor} />
                       </View>
 
                       <View>
-                        <Text className="text-gray-800 font-medium text-base">{item.description}</Text>
-                        <Text className="text-gray-500 text-xs">{formatDateTime(item.date, "dateLong")}</Text>
+                        <Text className="text-light-typography-primary dark:text-dark-typography-primary font-medium text-base">
+                          {item.description}
+                        </Text>
+                        <Text className="text-light-typography-muted dark:text-dark-typography-muted text-xs">
+                          {formatDateTime(item.date, "dateLong")}
+                        </Text>
                       </View>
                     </View>
 
                     <View className="items-end">
-                      <Text className="text-gray-500 text-xs">{item.paymentMethod}</Text>
-                      <Text className={clsx("font-semibold text-base", isNegative ? "text-red-500" : "text-green-500")}>
+                      <Text className="text-light-typography-muted dark:text-dark-typography-muted text-xs">
+                        {item.paymentMethod}
+                      </Text>
+                      <Text
+                        className={clsx(
+                          "font-semibold text-base",
+                          isNegative
+                            ? "text-light-status-danger dark:text-dark-status-danger"
+                            : "text-light-status-success dark:text-dark-status-success"
+                        )}
+                      >
                         {formatToCurrency(item.amount)}
                       </Text>
                     </View>

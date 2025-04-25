@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useController, Control } from "react-hook-form";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@/hooks/styles/useTheme";
 
 interface KeyboardProps {
   control: Control<any>;
@@ -17,6 +18,7 @@ const keys: string[][] = [
 ];
 
 export function NumericKeyboard({ control, name }: KeyboardProps) {
+  const theme = useTheme();
   const {
     field: { value = "", onChange },
   } = useController({ control, name, defaultValue: "" });
@@ -34,21 +36,23 @@ export function NumericKeyboard({ control, name }: KeyboardProps) {
   };
 
   return (
-    <View className="">
+    <View>
       {keys.map((row, ri) => (
         <View key={ri} className="flex-row justify-between">
           {row.map((k) => (
             <TouchableOpacity
               key={k || Math.random()}
-              className="flex-1 m-2 bg-white border border-gray-300 rounded-lg h-20 items-center justify-center"
+              className="flex-1 m-2 h-20 rounded-xl items-center justify-center bg-light-surface-card dark:bg-dark-surface-card border border-light-stroke-default dark:border-dark-stroke-default"
               onPress={() => k && handlePress(k)}
               style={{ elevation: 2 }}
               activeOpacity={0.7}
             >
               {k === "backspace" ? (
-                <Ionicons name="backspace-outline" size={24} className="text-black" />
+                <Ionicons name="backspace-outline" size={24} color={theme.typography.muted} />
               ) : (
-                <Text className="text-xl font-bold text-black">{k}</Text>
+                <Text className="text-xl font-bold text-light-typography-primary dark:text-dark-typography-primary">
+                  {k}
+                </Text>
               )}
             </TouchableOpacity>
           ))}
@@ -57,26 +61,3 @@ export function NumericKeyboard({ control, name }: KeyboardProps) {
     </View>
   );
 }
-
-// Uso no componente pai:
-/**
-import React from "react";
-import { View, Text } from "react-native";
-import { useForm } from "react-hook-form";
-import { NumericKeyboard } from "@/components/NumericKeyboard";
-import { formatToCurrency } from "@/utils/formatToCurrency";
-
-export function ParentComponent() {
-  const { control, watch } = useForm({ defaultValues: { amount: "" } });
-  const raw = watch("amount");
-  const val = parseInt(raw || "0", 10) / 100;
-  const formatted = formatToCurrency(val);
-
-  return (
-    <View className="p-4 flex-1">
-      <Text className="text-3xl font-semibold mb-4">{formatted}</Text>
-      <NumericKeyboard control={control} name="amount" />
-    </View>
-  );
-}
-*/

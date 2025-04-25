@@ -23,23 +23,28 @@ export function FinancialResume({
     expense: "Saídas",
   },
 }: Props) {
-  // Formatados com useMemo para performance
   const formattedRevenue = useMemo(() => formatToCurrency(revenue), [revenue]);
   const formattedExpense = useMemo(() => formatToCurrency(expense), [expense]);
 
   return (
     <View className="gap-2">
       <View className="flex-row gap-2 flex-wrap justify-between">
-        <Card className="relative flex-1 flex-row h-20 p-4 justify-between bg-[#0d723f] min-w-[150px]">
+        <Card
+          className="relative flex-1 flex-row h-20 p-4 justify-between 
+                     bg-light-status-success dark:bg-dark-status-success 
+                     min-w-[150px]"
+        >
           <View className="absolute right-[-20] bottom-[-20]">
             <ArrowUpCircle width={100} height={100} />
           </View>
 
           <View className="flex-1 flex-row items-center gap-2">
             <View>
-              <Text className="text-zinc-200 text-sm font-medium">{labels.revenue}</Text>
+              <Text className="text-light-typography-inverse dark:text-dark-typography-inverse text-sm font-medium">
+                {labels.revenue}
+              </Text>
               <Text
-                className="text-zinc-100 text-xl font-extrabold max-w-[110px]"
+                className="text-light-typography-inverse dark:text-dark-typography-inverse text-xl font-extrabold max-w-[110px]"
                 numberOfLines={1}
                 adjustsFontSizeToFit
                 minimumFontScale={0.85}
@@ -50,16 +55,22 @@ export function FinancialResume({
           </View>
         </Card>
 
-        <Card className="relative flex-1 flex-row h-20 p-4 justify-between bg-[##960f0f] min-w-[150px]">
+        <Card
+          className="relative flex-1 flex-row h-20 p-4 justify-between 
+                     bg-light-status-danger dark:bg-dark-status-danger 
+                     min-w-[150px]"
+        >
           <View className="absolute right-[-20] bottom-[-20]">
             <ArrowDownCircle width={100} height={100} />
           </View>
 
           <View className="flex-1 flex-row items-center gap-2">
             <View>
-              <Text className="text-zinc-200 text-sm font-medium">{labels.expense}</Text>
+              <Text className="text-light-typography-inverse dark:text-dark-typography-inverse text-sm font-medium">
+                {labels.expense}
+              </Text>
               <Text
-                className="text-zinc-100 text-xl font-extrabold max-w-[110px]"
+                className="text-light-typography-inverse dark:text-dark-typography-inverse text-xl font-extrabold max-w-[110px]"
                 numberOfLines={1}
                 adjustsFontSizeToFit
                 minimumFontScale={0.85}

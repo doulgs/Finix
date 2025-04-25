@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { TextInput, View, Pressable, Text, NativeSyntheticEvent, TextInputFocusEventData } from "react-native";
+import { NativeSyntheticEvent, Pressable, TextInput, TextInputFocusEventData, View } from "react-native";
+import { useTheme } from "@/hooks/styles/useTheme";
 
 interface PasswordInputProps {
   value: string;
@@ -11,12 +12,14 @@ interface PasswordInputProps {
 }
 
 export const PasswordInput = ({ value, onChange, onBlur, placeholder }: PasswordInputProps) => {
+  const theme = useTheme();
   const [secure, setSecure] = useState(true);
 
   return (
     <View className="flex-1 flex-row items-center justify-between">
       <TextInput
-        className="flex-1 text-base text-gray-900 dark:text-white"
+        className="flex-1 text-base text-light-typography-primary dark:text-dark-typography-primary"
+        placeholderTextColor={theme.typography.muted}
         secureTextEntry={secure}
         placeholder={placeholder}
         onBlur={onBlur}
@@ -26,7 +29,7 @@ export const PasswordInput = ({ value, onChange, onBlur, placeholder }: Password
         autoCapitalize="none"
       />
       <Pressable onPress={() => setSecure(!secure)}>
-        <Ionicons name={!secure ? "eye-outline" : "eye-off-outline"} size={24} color="#666" />
+        <Ionicons name={secure ? "eye-off-outline" : "eye-outline"} size={24} color={theme.typography.muted} />
       </Pressable>
     </View>
   );

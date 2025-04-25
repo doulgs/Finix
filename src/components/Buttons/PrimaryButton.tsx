@@ -17,7 +17,10 @@ export const PrimaryButton = ({ title, onPress, disabled = false, loading = fals
       onPress={onPress}
       disabled={isDisabled}
       style={{ elevation: 2 }}
-      className={clsx("bg-primary-light dark:bg-primary-dark rounded-lg py-3 mt-4", isDisabled && "opacity-60")}
+      className={clsx(
+        "bg-light-brand-primary dark:bg-dark-brand-primary rounded-lg py-3 mt-4",
+        isDisabled && "opacity-75"
+      )}
       {...rest}
     >
       {loading ? (

@@ -1,19 +1,20 @@
 import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import { KeyboardAvoidingView, Platform, Text, View } from "react-native";
 
 import { PrimaryButton } from "@/components/Buttons/PrimaryButton";
+import { MultiOptionSwitch } from "@/components/Buttons/MultiOptionSwitch";
 import { NumericKeyboard } from "@/components/Inputs/NumericKeyboard";
 import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
 import { useTransactionStorage } from "@/storages/useTransactionStorage";
 import { formatToCurrency } from "@/utils/formatToCurrency";
-import { Controller, useForm } from "react-hook-form";
-import { KeyboardAvoidingView, Platform, Text, View } from "react-native";
-import { MultiOptionSwitch } from "@/components/Buttons/MultiOptionSwitch";
 import { useToast } from "@/context/ToastContext";
 
 interface FormData {
   amount: string;
   type: "Entrada" | "Saida" | "Outros";
 }
+
 export default function New() {
   const { to } = useCustomNavigation();
   const { showToast } = useToast();
@@ -51,11 +52,13 @@ export default function New() {
 
     to.transactions.newDetail();
   };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      className="flex-1 justify-between bg-zinc-100 p-4"
+      className="flex-1 justify-between bg-light-background-default dark:bg-dark-background-default p-4"
     >
+      {/* Seletor de tipo */}
       <View>
         <Controller
           name="type"
@@ -66,11 +69,20 @@ export default function New() {
         />
       </View>
 
+      {/* Valor central */}
       <View className="flex-1 justify-center items-center mb-4">
-        <Text className="text-xl font-semibold mb-8 text-zinc-400">Digite o valor da transação</Text>
-        <Text className="text-5xl font-semibold mb-4">{formatted}</Text>
+        <Text className="text-xl font-semibold mb-6 text-light-typography-muted dark:text-dark-typography-muted">
+          Digite o valor da transação
+        </Text>
+        <Text className="text-5xl font-bold text-light-typography-primary dark:text-dark-typography-primary">
+          {formatted}
+        </Text>
       </View>
+
+      {/* Teclado numérico */}
       <NumericKeyboard control={control} name="amount" />
+
+      {/* Botão */}
       <PrimaryButton title="Confirmar" onPress={handleSubmit(onSubmit)} />
     </KeyboardAvoidingView>
   );
