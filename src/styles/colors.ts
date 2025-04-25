@@ -1,156 +1,95 @@
 export const colors = {
-  primary: {
-    light: "#FF941A",
-    dark: "#FF941A", //"#FF4500",
-  },
-  secondary: {
-    light: "#FFB703",
-    dark: "#D97706",
-  },
-  accent: {
-    light: "#960f0f",
-    dark: "#9A3412",
-  },
-  success: {
-    light: "#0d723f",
-    dark: "#16A34A",
-  },
-  warning: {
-    light: "#EAB308",
-    dark: "#CA8A04",
-  },
-  info: {
-    light: "#2563EB",
-    dark: "#1E40AF",
-  },
-  background: {
-    light: "#F5F5F5",
-    dark: "#000000",
-    alt: {
-      light: "#FFFFFF",
-      dark: "#121212",
+  light: {
+    brand: {
+      primary: "#FF941A",
+      secondary: "#ffac4c",
     },
-    muted: {
-      light: "#F0F0F0",
-      dark: "#1A1A1A",
+    status: {
+      success: "#22C55E",
+      warning: "#FACC15",
+      danger: "#EF4444",
+      info: "#3B82F6",
     },
-    hover: {
-      light: "#E0E0E0",
-      dark: "#2A2A2A",
+    background: {
+      default: "#F9FAFB",
+      muted: "#F3F4F6",
+      elevated: "#FFFFFF",
+      alt: "#E5E7EB",
     },
-    pressed: {
-      light: "#BDBDBD",
-      dark: "#525252",
+    typography: {
+      primary: "#111827",
+      secondary: "#374151",
+      muted: "#6B7280",
+      subtle: "#9CA3AF",
+      inverse: "#FFFFFF",
+      brand: "#FF941A",
+      danger: "#DC2626",
+      success: "#16A34A",
     },
-  },
-  card: {
-    light: "#FFFFFF",
-    dark: "#1A1A1A",
-    alt: {
-      light: "#E0E0E0",
-      dark: "#1F1F1F",
+    stroke: {
+      default: "#D1D5DB",
+      strong: "#9CA3AF",
+      focus: "#FF941A",
+      danger: "#EF4444",
     },
-    muted: {
-      light: "#EFEFEF",
-      dark: "#2A2A2A",
+    surface: {
+      card: "#FFFFFF",
+      sheet: "#F9FAFB",
+      input: "#F3F4F6",
+      hover: "#E5E7EB",
+      pressed: "#D1D5DB",
     },
-    hover: {
-      light: "#F3F3F3",
-      dark: "#262626",
+    overlay: {
+      light: "rgba(0, 0, 0, 0.04)",
+      medium: "rgba(0, 0, 0, 0.1)",
+      heavy: "rgba(0, 0, 0, 0.25)",
     },
   },
-  input: {
-    light: "#e5e7eb",
-    dark: "#404040",
-    focus: {
-      light: "#D4D4D4",
-      dark: "#525252",
+
+  dark: {
+    brand: {
+      primary: "#FF4500",
+      secondary: "#ff7c4c",
     },
-    hover: {
-      light: "#DDDDDD",
-      dark: "#4B4B4B",
+    status: {
+      success: "#4ADE80",
+      warning: "#FBBF24",
+      danger: "#F87171",
+      info: "#60A5FA",
     },
-    placeholder: {
-      light: "#A3A3A3",
-      dark: "#7E7E7E",
+    background: {
+      default: "#0F0F0F",
+      muted: "#18181B",
+      elevated: "#1F1F23",
+      alt: "#262626",
     },
-  },
-  border: {
-    light: "#8c8c8c",
-    dark: "#525252",
-    focus: {
-      light: "#FF941A",
-      dark: "#FF941A",
+    typography: {
+      primary: "#F9FAFB",
+      secondary: "#D1D5DB",
+      muted: "#9CA3AF",
+      subtle: "#6B7280",
+      inverse: "#000000",
+      brand: "#FF941A",
+      danger: "#FCA5A5",
+      success: "#86EFAC",
     },
-    muted: {
-      light: "#E0E0E0",
-      dark: "#2F2F2F",
+    stroke: {
+      default: "#4B5563",
+      strong: "#6B7280",
+      focus: "#FFB84D",
+      danger: "#F87171",
     },
-  },
-  text: {
-    light: "#333333",
-    dark: "#FFFFFF",
-    secondary: {
-      light: "#525252",
-      dark: "#BDBDBD",
+    surface: {
+      card: "#1F2937",
+      sheet: "#111827",
+      input: "#1C1C1E",
+      hover: "#2A2A2A",
+      pressed: "#333333",
     },
-    muted: {
-      light: "#8C8C8C",
-      dark: "#7E7E7E",
+    overlay: {
+      light: "rgba(255, 255, 255, 0.04)",
+      medium: "rgba(255, 255, 255, 0.1)",
+      heavy: "rgba(255, 255, 255, 0.25)",
     },
-    disabled: {
-      light: "#BDBDBD",
-      dark: "#5E5E5E",
-    },
-  },
-  textSecondary: {
-    light: "#525252", // Cinza escuro para textos secundários no modo claro
-    dark: "#BDBDBD", // Cinza mais suave para melhor leitura no modo escuro
-  },
-  button: {
-    primary: {
-      light: "#f97316",
-      dark: "#FF4500",
-      hover: {
-        light: "#FFAD47",
-        dark: "#FFA63E",
-      },
-      pressed: {
-        light: "#E68100",
-        dark: "#E68100",
-      },
-    },
-    secondary: {
-      light: "#FACC15",
-      dark: "#B45309",
-      hover: {
-        light: "#FFE066",
-        dark: "#D97706",
-      },
-    },
-    danger: {
-      light: "#DC2626",
-      dark: "#F87171",
-    },
-    success: {
-      light: "#22C55E",
-      dark: "#16A34A",
-    },
-  },
-  icon: {
-    light: "#1A1A1A",
-    dark: "#FFFFFF",
-    muted: {
-      light: "#6B7280",
-      dark: "#9CA3AF",
-    },
-  },
-  overlay: {
-    light: "rgba(0,0,0,0.2)", // Sombra mais leve no modo claro
-    dark: "rgba(255,255,255,0.1)", // Sombra mais sutil no modo escuro para evitar brilho excessivo
-  },
-  shadow: {
-    light: "#BFBFBF", // Cinza médio para sombras suaves no modo claro
-    dark: "#0D0D0D", // Cinza quase preto para sombras no modo escuro
   },
 };
