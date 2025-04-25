@@ -18,6 +18,7 @@ interface ExtraHeaderProps {
   label?: string;
   actions?: ActionsProps[];
   hideBackButton?: boolean;
+  showImageAvatar?: boolean;
   imageAvatar?: string | null;
 }
 
@@ -38,6 +39,7 @@ export const CustomHeader: React.FC<StackOrTabHeaderProps> = ({
   actions = [],
   hideBackButton,
   imageAvatar,
+  showImageAvatar = false,
   ...rest
 }) => {
   const title = options.title?.toString() || route.name;
@@ -63,7 +65,7 @@ export const CustomHeader: React.FC<StackOrTabHeaderProps> = ({
             </TouchableOpacity>
           )}
 
-          {imageAvatar && (
+          {showImageAvatar && (
             <Image
               source={
                 imageAvatar

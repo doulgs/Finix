@@ -3,8 +3,8 @@ import { transactionTable } from "@/database/schemas/transaction";
 import { eq } from "drizzle-orm";
 import type { InferInsertModel } from "drizzle-orm";
 
-type CreateTransaction = InferInsertModel<typeof transactionTable>;
-type UpdateTransaction = Partial<CreateTransaction>;
+export type CreateTransaction = InferInsertModel<typeof transactionTable>;
+export type UpdateTransaction = Partial<CreateTransaction>;
 
 export function useTransactionRepository() {
   const db = useDatabaseContext();

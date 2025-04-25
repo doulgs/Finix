@@ -3,8 +3,8 @@ import { accountTable } from "@/database/schemas/account";
 import { eq } from "drizzle-orm";
 import type { InferInsertModel } from "drizzle-orm";
 
-type CreateAccount = InferInsertModel<typeof accountTable>;
-type UpdateAccount = Partial<CreateAccount>;
+export type CreateAccount = InferInsertModel<typeof accountTable>;
+export type UpdateAccount = Partial<CreateAccount>;
 
 export function useAccountRepository() {
   const db = useDatabaseContext();

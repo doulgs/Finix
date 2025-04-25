@@ -2,63 +2,37 @@
  * Formata um número como moeda brasileira (BRL).
  *
  * @param value - O valor numérico a ser formatado. Se não for um número finito, será tratado como 0.
- * @returns Uma string formatada como moeda brasileira. Exemplo: `R$ 1.000,00`
+ * @returns Uma string formatada como moeda brasileira. Exemplo: `R$ 1.000,00`
  */
 export function formatToCurrency(value: number | null | undefined): string {
-  // Converte o valor para número e valida se é finito; caso contrário, utiliza 0.
   const numericValue = Number(value);
   const validValue = Number.isFinite(numericValue) ? numericValue : 0;
-
-  // Formata o número como moeda brasileira utilizando o locale "pt-BR".
-  const formattedValue = validValue.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
-
-  // Garante que haja um espaço após o símbolo da moeda (ex: "R$ ") caso não esteja presente.
-  return formattedValue.replace(/^(\D+)/, "$1 ");
+  // Garante pelo menos duas casas decimais e separador de milhares
+  return validValue
+    .toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
+    .replace(/^(\D+)/, "$1 "); // assegura espaço após R$
 }
 
-export const formatStringToCurrency = (value: string): string => {
-  const number = formatCurrencyToNumber(value);
-  return number.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-    minimumFractionDigits: 2,
-  });
-};
-
-export const formatCurrencyToNumber = (value: string): number => {
+/**
+ * Converte uma string formatada (ex: "R$ 1.234,56" ou "1.234,56") em número.
+ *
+ * @param value - A string a ser convertida.
+ * @returns O valor numérico correspondente, ou 0 se não puder parsear.
+ */
+export function parseCurrency(value: string): number {
   if (!value) return 0;
-
+  // Remove tudo que não for dígito ou vírgula/ponto de forma adequada
   const clean = value
-    .replace("R$", "")
-    .replace(/\s/g, "")
+    .replace(/\s/g, "") // tira espaços
+    .replace(/^R\$\s?/, "") // tira prefixo R$
     .replace(/\./g, "") // remove pontos de milhar
-    .replace(",", "."); // transforma vírgula decimal em ponto
+    .replace(/,/g, "."); // transforma vírgula decimal em ponto
 
-  return parseFloat(clean) || 0;
-};
-
-export const formatCentavosToCurrency = (value: string): string => {
-  if (!value) return "R$ 0,00";
-
-  // remove zeros à esquerda
-  const numeric = value.replace(/\D/g, "");
-  const centavos = parseFloat((parseInt(numeric || "0") / 100).toFixed(2));
-
-  return centavos.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-    minimumFractionDigits: 2,
-  });
-};
-
-export const formatToBRLCurrency = (value: string | number): string => {
-  const number = typeof value === "string" ? parseFloat(value) : value;
-  return number.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-    minimumFractionDigits: 2,
-  });
-};
+  const n = parseFloat(clean);
+  return Number.isFinite(n) ? n : 0;
+}

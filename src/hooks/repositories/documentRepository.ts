@@ -3,8 +3,8 @@ import { documentTable } from "@/database/schemas/document";
 import { eq } from "drizzle-orm";
 import type { InferInsertModel } from "drizzle-orm";
 
-type CreateDocument = InferInsertModel<typeof documentTable>;
-type UpdateDocument = Partial<CreateDocument>;
+export type CreateDocument = InferInsertModel<typeof documentTable>;
+export type UpdateDocument = Partial<CreateDocument>;
 
 export function useDocumentRepository() {
   const db = useDatabaseContext();

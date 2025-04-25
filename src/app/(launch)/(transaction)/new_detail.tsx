@@ -1,9 +1,7 @@
-/* import { MultiOptionSwitch } from "@/components/Buttons/MultiOptionSwitch";
+import { MultiOptionSwitch } from "@/components/Buttons/MultiOptionSwitch";
 import { CustomInput } from "@/components/Inputs/CustomInput";
-import { TransactionStatusLabelMap } from "@/constants/transactionStatuses";
-import { TransactionTypeLabelMap } from "@/constants/transactionTypes";
-import { useTransactionCreationStore } from "@/store-old/transaction/useTransactionCreationStore";
-import { formatStringToCurrency } from "@/utils/formatToCurrency";
+import { useTransactionStorage } from "@/storages/useTransactionStorage";
+import { formatToCurrency } from "@/utils/formatToCurrency";
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -15,9 +13,9 @@ if (Platform.OS === "android") {
 
 interface FormData {
   description: string;
-  type: "Entrada" | "Saida" | "Outros";
+  type: string;
   notes: string;
-  value: string;
+  value: string | undefined;
   date: string;
   dueDate: string;
   status: "Pendente" | "Finalizado";
@@ -33,7 +31,7 @@ interface FormData {
 }
 
 export default function NewDetail() {
-  const transaction = useTransactionCreationStore.getState();
+  const { transaction } = useTransactionStorage.getState();
 
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
 
@@ -44,8 +42,8 @@ export default function NewDetail() {
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      type: transaction.type,
-      value: formatStringToCurrency(transaction.value),
+      type: transaction?.transactionType || "Entrada",
+      value: formatToCurrency(Number(transaction?.amount?.toString() ?? "0")),
       description: "",
       notes: "",
       date: new Date().toISOString().substring(0, 10),
@@ -64,21 +62,15 @@ export default function NewDetail() {
   });
 
   const onSubmit = (data: FormData) => {
-    const transactionStore = useTransactionCreationStore.getState();
+    const transactionStore = useTransactionStorage.getState();
 
-    transactionStore.setAll({
+    transactionStore.setTransaction({
       ...data,
-      type: data.type,
+      transactionType: data.type,
       status: data.status,
     });
 
-    const payload = {
-      ...data,
-      transactionType: TransactionTypeLabelMap[data.type],
-      transactionStatus: TransactionStatusLabelMap[data.status],
-    };
-
-    console.log("📝 Transação enviada:", payload);
+    console.log("📝 Transação enviada:");
     reset();
   };
 
@@ -246,18 +238,6 @@ export default function NewDetail() {
           <Text className="text-white text-center font-bold text-lg">Salvar Transação</Text>
         </TouchableOpacity>
       </ScrollView>
-    </View>
-  );
-}
- */
-
-import React from "react";
-import { Text, View } from "react-native";
-
-export default function NewDetail() {
-  return (
-    <View className="flex-1">
-      <Text>New_detail</Text>
     </View>
   );
 }

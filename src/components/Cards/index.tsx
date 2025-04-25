@@ -1,2 +1,2 @@
-export { Card } from "./Card";
+export { Card, CardType } from "./Card";
 export { CardActions } from "./CardActions";

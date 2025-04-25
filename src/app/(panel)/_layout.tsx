@@ -1,3 +1,4 @@
+import { CustomTabBar } from "@/components/CustomTabBar";
 import { CustomHeader } from "@/components/Headers/CustomHeader";
 import { CustomTabBarPanel } from "@/components/Tabs-Bars/CustomTabBarPanel";
 import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
@@ -10,17 +11,18 @@ export default function LayoutPanel() {
   const { user } = useUserStorage();
   const { to } = useCustomNavigation();
   return (
-    <Tabs tabBar={(props) => <CustomTabBarPanel {...props} />}>
+    <Tabs tabBar={(props) => <CustomTabBar {...props} />}>
       <Tabs.Screen
         name="index"
         options={{
-          title: "Dashboard",
+          title: "Início",
           header: (props) => (
             <CustomHeader
               {...props}
               subTitle={user?.name ? user.name : "Usuário"}
               imageAvatar={user?.image}
               hideBackButton
+              showImageAvatar
               actions={[
                 {
                   icon: <Octicons name="question" size={20} color="white" />,
@@ -52,6 +54,13 @@ export default function LayoutPanel() {
               ]}
             />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="new"
+        options={{
+          title: "Transações",
+          header: (props) => <CustomHeader {...props} subTitle="Movimentações registradas" hideBackButton />,
         }}
       />
       <Tabs.Screen

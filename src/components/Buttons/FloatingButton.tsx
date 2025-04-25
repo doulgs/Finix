@@ -13,7 +13,8 @@ function FloatingButton({ iconName, routingIcon, onPress }: Props) {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      className="absolute bottom-5 right-5 rounded-2xl w-16 h-16 overflow-hidden"
+      className="absolute rounded-xl w-16 h-16 overflow-hidden"
+      style={{ bottom: 14, right: 14 }}
       onPress={onPress}
     >
       <CustomBackground
@@ -23,7 +24,7 @@ function FloatingButton({ iconName, routingIcon, onPress }: Props) {
         <View className="flex-1 items-center justify-center">
           <Octicons
             name={iconName}
-            size={24}
+            size={28}
             color="white"
             style={{ transform: [{ rotate: routingIcon ? "45deg" : "0deg" }] }}
           />

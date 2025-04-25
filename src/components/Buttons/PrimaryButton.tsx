@@ -16,6 +16,7 @@ export const PrimaryButton = ({ title, onPress, disabled = false, loading = fals
     <TouchableOpacity
       onPress={onPress}
       disabled={isDisabled}
+      style={{ elevation: 2 }}
       className={clsx("bg-primary-light dark:bg-primary-dark rounded-lg py-3 mt-4", isDisabled && "opacity-60")}
       {...rest}
     >

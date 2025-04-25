@@ -3,8 +3,8 @@ import { categoryTable } from "@/database/schemas/category";
 import { eq } from "drizzle-orm";
 import type { InferInsertModel } from "drizzle-orm";
 
-type CreateCategory = InferInsertModel<typeof categoryTable>;
-type UpdateCategory = Partial<CreateCategory>;
+export type CreateCategory = InferInsertModel<typeof categoryTable>;
+export type UpdateCategory = Partial<CreateCategory>;
 
 export function useCategoryRepository() {
   const db = useDatabaseContext();

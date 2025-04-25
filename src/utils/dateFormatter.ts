@@ -1,77 +1,142 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import weekOfYear from "dayjs/plugin/weekOfYear";
+import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import "dayjs/locale/pt-br";
 
+// Extensões para UTC, timezones, formatos localizados, semana e trimestre
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(localizedFormat);
+dayjs.extend(weekOfYear);
+dayjs.extend(quarterOfYear);
 dayjs.locale("pt-br");
 
-// Define o fuso horário padrão (UTC-3)
-const DEFAULT_TIMEZONE = "America/Sao_Paulo";
+// Fuso horário padrão
+const DEFAULT_TIMEZONE = "America/Sao_Paulo" as const;
+
+// Função auxiliar para capitalizar a primeira letra
+const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
 
 /**
- * Tipos de formatação de data suportados.
+ * Estilos de formatação de data/hora suportados.
  */
 export type DateFormatStyle =
-  | "hours"
-  | "date"
-  | "dateLong"
-  | "short"
-  | "medium"
-  | "long"
-  | "full"
-  | "fullLong"
-  | "day"
-  | "dayLong"
-  | "dayMonth"
-  | "dayMonthLong"
-  | "month"
-  | "monthShort"
-  | "monthLong"
-  | "year"
-  | "yearShort";
+  // Formatos de horário
+  | "time24" // Ex: 15:30
+  | "time24Seconds" // Ex: 15:30:45
+  | "time12" // Ex: 03:30 PM
+  | "time12Seconds" // Ex: 03:30:45 PM
+  // Formatos de data (pt-br)
+  | "dateShort" // Ex: 18/04/25
+  | "dateMedium" // Ex: 18/04/2025
+  | "dateLong" // Ex: 18 de abril de 2025
+  | "dateFull" // Ex: sexta-feira, 18 de abril de 2025
+  // Formatos de data (en)
+  | "usDateShort" // Ex: 04/18/25
+  | "usDateMedium" // Ex: 04/18/2025
+  | "enDateLong" // Ex: April 18, 2025
+  | "enDateFull" // Ex: Friday, April 18, 2025
+  // Formatos de data-hora
+  | "dateTimeShort" // Ex: 18/04/25 15:30
+  | "dateTimeMedium" // Ex: 18/04/2025 às 15:30
+  | "dateTimeLong" // Ex: 18 de abril de 2025 às 15:30
+  | "enDateTimeLong" // Ex: April 18, 2025 3:30 PM
+  // ISO e RFC
+  | "isoDate" // Ex: 2025-04-18
+  | "isoDateTime" // Ex: 2025-04-18T15:30:45-03:00
+  | "rfc2822" // Ex: Fri, 18 Apr 2025 15:30:45 -0300
+  // Outros
+  | "day" // Ex: 18
+  | "dayName" // Ex: sexta-feira
+  | "dayMonth" // Ex: 18/04
+  | "dayMonthName" // Ex: 18 de abril
+  | "month" // Ex: 04
+  | "monthNameShort" // Ex: abr
+  | "monthNameLong" // Ex: abril
+  | "monthYear" // Ex: abril/2025
+  | "year" // Ex: 2025
+  | "quarter" // Ex: 2º trimestre
+  | "weekOfYear"; // Ex: 16ª semana
 
 /**
- * Mapeia os estilos para os padrões de formatação do Day.js.
+ * Mapeamento de estilos para padrões de formato do dayjs.
  */
-const DATE_FORMATS: Record<DateFormatStyle, string> = {
-  hours: "HH:mm",
-  date: "DD/MM/YY",
-  dateLong: "DD/MM/YYYY",
-  short: "DD/MM/YY HH:mm",
-  medium: "DD/MM/YYYY [às] HH:mm",
-  long: "DD [de] MMMM [de] YYYY [às] HH:mm",
-  full: "dddd, DD [de] MMMM [de] YYYY [às] HH:mm",
-  fullLong: "DD [de] MMMM [de] YYYY",
-  day: "DD",
-  dayLong: "dddd", // Nome do dia da semana (ex: Terça-feira)
-  dayMonth: "DD/MM", // Novo formato: Dia/Mês (ex: 27/02)
-  dayMonthLong: "DD/MMMM", // Novo formato: Dia/Mês (ex: 27/02)
-  month: "MM",
-  monthShort: "MMM",
-  monthLong: "MMMM",
-  year: "YYYY",
-  yearShort: "YY", // Apenas os dois últimos dígitos do ano (ex: 25 para 2025)
-};
+const DATE_FORMATS = {
+  time24: "HH:mm", // Ex: 15:30
+  time24Seconds: "HH:mm:ss", // Ex: 15:30:45
+  time12: "hh:mm A", // Ex: 03:30 PM
+  time12Seconds: "hh:mm:ss A", // Ex: 03:30:45 PM
+
+  dateShort: "DD/MM/YY", // Ex: 18/04/25
+  dateMedium: "DD/MM/YYYY", // Ex: 18/04/2025
+  dateLong: "DD [de] MMMM [de] YYYY", // Ex: 18 de abril de 2025
+  dateFull: "dddd, DD [de] MMMM [de] YYYY", // Ex: sexta-feira, 18 de abril de 2025
+
+  usDateShort: "MM/DD/YY", // Ex: 04/18/25
+  usDateMedium: "MM/DD/YYYY", // Ex: 04/18/2025
+  enDateLong: "MMMM D, YYYY", // Ex: April 18, 2025
+  enDateFull: "dddd, MMMM D, YYYY", // Ex: Friday, April 18, 2025
+
+  dateTimeShort: "DD/MM/YY HH:mm", // Ex: 18/04/25 15:30
+  dateTimeMedium: "DD/MM/YYYY [às] HH:mm", // Ex: 18/04/2025 às 15:30
+  dateTimeLong: "DD [de] MMMM [de] YYYY [às] HH:mm", // Ex: 18 de abril de 2025 às 15:30
+  enDateTimeLong: "MMMM D, YYYY h:mm A", // Ex: April 18, 2025 3:30 PM
+
+  isoDate: "YYYY-MM-DD", // Ex: 2025-04-18
+  isoDateTime: "YYYY-MM-DD[T]HH:mm:ssZ", // Ex: 2025-04-18T15:30:45-03:00
+  rfc2822: "ddd, DD MMM YYYY HH:mm:ss ZZ", // Ex: Fri, 18 Apr 2025 15:30:45 -0300
+
+  day: "DD", // Ex: 18
+  dayName: "dddd", // Ex: sexta-feira
+  dayMonth: "DD/MM", // Ex: 18/04
+  dayMonthName: "DD [de] MMMM", // Ex: 18 de abril
+  month: "MM", // Ex: 04
+  monthNameShort: "MMM", // Ex: abr
+  monthNameLong: "MMMM", // Ex: abril
+  monthYear: "MMMM/YYYY", // Ex: abril/2025
+  year: "YYYY", // Ex: 2025
+  quarter: "Qo [trimestre]", // Ex: 2º trimestre
+  weekOfYear: "Wo [semana]", // Ex: 16ª semana
+} as const;
 
 /**
- * Formata uma data conforme o estilo desejado, sem ajustar o timestamp (usa a data “como está”).
- * @param inputDate Data a ser formatada (Date, string ou undefined)
- * @param style Estilo de formatação (padrão: "medium")
- * @returns Data formatada ou mensagem de erro.
+ * Formata uma data de acordo com o estilo e fuso fornecidos.
+ * @param inputDate - Date ou string ISO.
+ * @param style - Estilo de formatação desejado.
+ * @param tz - Fuso horário para ajuste (padrão DEFAULT_TIMEZONE).
+ * @returns Valor formatado ou mensagem de erro.
  */
-export const formatDateTime = (inputDate?: Date | string, style: DateFormatStyle = "medium"): string => {
+export function formatDateTime(
+  inputDate?: Date | string,
+  style: DateFormatStyle = "dateMedium",
+  tz: string = DEFAULT_TIMEZONE
+): string {
   if (!inputDate) return "Data não informada";
 
-  const dateObj = dayjs(inputDate); // Sem conversão de fuso horário
-  return dateObj.isValid() ? dateObj.format(DATE_FORMATS[style]) : `Data inválida: ${inputDate}`;
-};
+  const date = typeof inputDate === "string" ? dayjs.tz(inputDate, tz) : dayjs(inputDate).tz(tz);
+
+  if (!date.isValid()) {
+    return `Data inválida: ${inputDate}`;
+  }
+
+  // Para isoDateTime, usamos toISOString()
+  if (style === "isoDateTime") {
+    return date.toISOString();
+  }
+
+  // Formata e capitaliza
+  const formatted = date.format(DATE_FORMATS[style]);
+  return capitalize(formatted);
+}
 
 /**
- * Obtém a data e hora atual no formato ISO, ajustada para o fuso horário padrão.
- * @returns Data e hora formatada no padrão ISO 8601.
+ * Retorna o timestamp ISO 8601 da data/hora atual no fuso especificado.
+ * @param tz - Fuso horário (padrão DEFAULT_TIMEZONE).
+ * @returns Timestamp ISO 8601.
  */
-export const getCurrentDateTimeISO = (): string => {
-  return dayjs.tz(new Date(), DEFAULT_TIMEZONE).toISOString();
-};
+export function getCurrentDateTimeISO(tz: string = DEFAULT_TIMEZONE): string {
+  return dayjs().tz(tz).toISOString();
+}
