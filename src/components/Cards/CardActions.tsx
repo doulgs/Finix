@@ -16,11 +16,11 @@ type CardActionsProps = {
 };
 
 export function CardActions({ actions }: CardActionsProps) {
-  const theme = useTheme();
+  const { palette } = useTheme();
   const renderItem: ListRenderItem<ActionItem> = ({ item }) => (
     <TouchableOpacity onPress={item.action} className="items-center justify-center mr-4" activeOpacity={0.3}>
       <View className="bg-light-surface-muted/40 dark:bg-dark-surface-muted/40 flex-1 items-center justify-center rounded-lg w-16 h-16">
-        <MaterialCommunityIcons name={item.icon} size={26} color={theme.brand.primary} />
+        <MaterialCommunityIcons name={item.icon} size={26} color={palette.brand.primary} />
       </View>
       <Text className="text-center text-xs mt-1 text-light-typography-primary dark:text-dark-typography-primary">
         {item.label}

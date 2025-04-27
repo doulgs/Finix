@@ -6,6 +6,7 @@ import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
 import clsx from "clsx";
 import { CustomBackground } from "@/components/Background/CustomBackground";
 import { takeGreeting } from "@/utils/takeGreeting";
+import { useTheme } from "@/hooks/styles/useTheme";
 
 interface ActionsProps {
   className?: string;
@@ -30,6 +31,9 @@ const isStackHeader = (props: any): props is NativeStackHeaderProps => {
   return "back" in props;
 };
 
+const darkBg = require("@/assets/image/rectangle-orange-dark.png");
+const lightBg = require("@/assets/image/rectangle-orange-light.png");
+
 export const CustomHeader: React.FC<StackOrTabHeaderProps> = ({
   navigation,
   options,
@@ -42,6 +46,8 @@ export const CustomHeader: React.FC<StackOrTabHeaderProps> = ({
   showImageAvatar = false,
   ...rest
 }) => {
+  const { currentTheme } = useTheme();
+  const backgroundSource = currentTheme === "dark" ? darkBg : lightBg;
   const title = options.title?.toString() || route.name;
 
   const canGoBack =
@@ -50,7 +56,7 @@ export const CustomHeader: React.FC<StackOrTabHeaderProps> = ({
 
   return (
     <CustomBackground
-      source={require("@/assets/image/rectangle-orange.png")}
+      source={backgroundSource}
       style={{
         width: "100%",
         height: 58 + STATUS_BAR_HEIGHT,
@@ -80,21 +86,13 @@ export const CustomHeader: React.FC<StackOrTabHeaderProps> = ({
           )}
 
           <View>
-            <Text className="text-xl font-bold text-light-typography-inverse dark:text-dark-typography-inverse">
+            <Text className="text-xl font-bold text-light-typography-inverse">
               {title === "Dashboard" ? `${takeGreeting()}` : title}
             </Text>
 
-            {subTitle && (
-              <Text className="text-sm italic text-light-typography-inverse dark:text-dark-typography-inverse">
-                {subTitle}
-              </Text>
-            )}
+            {subTitle && <Text className="text-sm italic text-light-typography-inverse">{subTitle}</Text>}
 
-            {label && (
-              <Text className="text-[10px] italic text-light-typography-inverse dark:text-dark-typography-inverse">
-                {label}
-              </Text>
-            )}
+            {label && <Text className="text-[10px] italic text-light-typography-inverse">{label}</Text>}
           </View>
         </View>
 

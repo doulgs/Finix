@@ -12,14 +12,14 @@ interface PasswordInputProps {
 }
 
 export const PasswordInput = ({ value, onChange, onBlur, placeholder }: PasswordInputProps) => {
-  const theme = useTheme();
+  const { palette } = useTheme();
   const [secure, setSecure] = useState(true);
 
   return (
     <View className="flex-1 flex-row items-center justify-between">
       <TextInput
         className="flex-1 text-base text-light-typography-primary dark:text-dark-typography-primary"
-        placeholderTextColor={theme.typography.muted}
+        placeholderTextColor={palette.typography.muted}
         secureTextEntry={secure}
         placeholder={placeholder}
         onBlur={onBlur}
@@ -29,7 +29,7 @@ export const PasswordInput = ({ value, onChange, onBlur, placeholder }: Password
         autoCapitalize="none"
       />
       <Pressable onPress={() => setSecure(!secure)}>
-        <Ionicons name={secure ? "eye-off-outline" : "eye-outline"} size={24} color={theme.typography.muted} />
+        <Ionicons name={secure ? "eye-off-outline" : "eye-outline"} size={24} color={palette.typography.muted} />
       </Pressable>
     </View>
   );

@@ -14,7 +14,7 @@ interface Props {
 }
 
 export function InvoiceCard({ date, onPress, value = 0 }: Props) {
-  const theme = useTheme();
+  const { palette } = useTheme();
   return (
     <Card className="mx-4 my-2">
       <TouchableOpacity activeOpacity={0.9} className="flex-row items-center justify-between" onPress={onPress}>
@@ -30,7 +30,7 @@ export function InvoiceCard({ date, onPress, value = 0 }: Props) {
 
         <View className="flex-row items-center h-full">
           <TouchableOpacity className="items-center justify-center px-2">
-            <Octicons name="chevron-right" size={20} color={theme.typography.inverse} />{" "}
+            <Octicons name="chevron-right" size={20} color={palette.typography.inverse} />{" "}
             {/* Pode extrair para token se quiser */}
           </TouchableOpacity>
         </View>

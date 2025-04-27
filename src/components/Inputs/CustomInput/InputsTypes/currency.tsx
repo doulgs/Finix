@@ -17,7 +17,7 @@ function formatCurrency(value: string) {
 }
 
 export const CurrencyInput = ({ value, onChange, onBlur, placeholder }: InputProps) => {
-  const theme = useTheme();
+  const { palette } = useTheme();
   const handleChange = (text: string) => {
     onChange(formatCurrency(text));
   };
@@ -25,7 +25,7 @@ export const CurrencyInput = ({ value, onChange, onBlur, placeholder }: InputPro
   return (
     <TextInput
       className="flex-1 text-light-typography-primary dark:text-dark-typography-primary text-base"
-      placeholderTextColor={theme.typography.muted}
+      placeholderTextColor={palette.typography.muted}
       placeholder={placeholder || "R$ 0,00"}
       onBlur={onBlur}
       onChangeText={handleChange}

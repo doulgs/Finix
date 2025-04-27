@@ -11,11 +11,11 @@ interface EmailInputProps extends Omit<TextInputProps, "onChange" | "onBlur" | "
 }
 
 export const EmailInput = ({ value, onChange, onBlur, placeholder, ...rest }: EmailInputProps) => {
-  const theme = useTheme();
+  const { palette } = useTheme();
   return (
     <TextInput
       className="flex-1 text-base text-light-typography-primary dark:text-dark-typography-primary"
-      placeholderTextColor={theme.typography.muted}
+      placeholderTextColor={palette.typography.muted}
       keyboardType="email-address"
       autoCapitalize="none"
       autoCorrect={false}

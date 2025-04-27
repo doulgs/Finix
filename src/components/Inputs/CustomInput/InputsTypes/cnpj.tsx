@@ -21,7 +21,7 @@ function applyCnpjMask(text: string) {
 }
 
 export const CNPJInput = ({ value, onChange, onBlur, placeholder }: InputProps) => {
-  const theme = useTheme();
+  const { palette } = useTheme();
   const handleChange = (text: string) => {
     onChange(applyCnpjMask(text));
   };
@@ -29,7 +29,7 @@ export const CNPJInput = ({ value, onChange, onBlur, placeholder }: InputProps) 
   return (
     <TextInput
       className="flex-1 text-light-typography-primary dark:text-dark-typography-primary text-base"
-      placeholderTextColor={theme.typography.muted}
+      placeholderTextColor={palette.typography.muted}
       placeholder={placeholder || "00.000.000/0000-00"}
       onBlur={onBlur}
       onChangeText={handleChange}

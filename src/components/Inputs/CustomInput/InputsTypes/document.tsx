@@ -30,7 +30,7 @@ function applyCnpjMask(text: string) {
 }
 
 export const DocumentInput = ({ value, onChange, onBlur, placeholder }: InputProps) => {
-  const theme = useTheme();
+  const { palette } = useTheme();
   const handleChange = (text: string) => {
     const onlyNumbers = text.replace(/\D/g, "");
 
@@ -44,7 +44,7 @@ export const DocumentInput = ({ value, onChange, onBlur, placeholder }: InputPro
   return (
     <TextInput
       className="flex-1 text-base text-light-typography-primary dark:text-dark-typography-primary"
-      placeholderTextColor={theme.typography.muted}
+      placeholderTextColor={palette.typography.muted}
       placeholder={placeholder || "CPF ou CNPJ"}
       onBlur={onBlur}
       onChangeText={handleChange}

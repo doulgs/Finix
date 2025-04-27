@@ -61,7 +61,7 @@ interface TabItemProps {
 }
 
 function TabItem({ isFocused, IconComponent, iconName, label, onPress }: TabItemProps) {
-  const theme = useTheme();
+  const { palette } = useTheme();
   const animation = useRef(new Animated.Value(isFocused ? 1 : 0)).current;
 
   useEffect(() => {
@@ -83,11 +83,15 @@ function TabItem({ isFocused, IconComponent, iconName, label, onPress }: TabItem
         style={highlightStyle}
         className="absolute bg-light-brand-primary dark:bg-dark-brand-primary rounded-lg p-3 items-center justify-center"
       >
-        <IconComponent name={iconName} size={24} color={theme.background.default} />
+        <IconComponent name={iconName} size={24} color={palette.background.default} />
       </Animated.View>
 
       <Animated.View style={iconGroupStyle} className="items-center justify-center gap-1">
-        <IconComponent name={iconName} size={24} color={isFocused ? theme.brand.primary : theme.typography.primary} />
+        <IconComponent
+          name={iconName}
+          size={24}
+          color={isFocused ? palette.brand.primary : palette.typography.primary}
+        />
         {!isFocused && (
           <Text className="text-xs text-light-typography-muted dark:text-dark-typography-muted">{label}</Text>
         )}

@@ -18,7 +18,7 @@ const keys: string[][] = [
 ];
 
 export function NumericKeyboard({ control, name }: KeyboardProps) {
-  const theme = useTheme();
+  const { palette } = useTheme();
   const {
     field: { value = "", onChange },
   } = useController({ control, name, defaultValue: "" });
@@ -48,7 +48,7 @@ export function NumericKeyboard({ control, name }: KeyboardProps) {
               activeOpacity={0.7}
             >
               {k === "backspace" ? (
-                <Ionicons name="backspace-outline" size={24} color={theme.typography.muted} />
+                <Ionicons name="backspace-outline" size={24} color={palette.typography.muted} />
               ) : (
                 <Text className="text-xl font-bold text-light-typography-primary dark:text-dark-typography-primary">
                   {k}

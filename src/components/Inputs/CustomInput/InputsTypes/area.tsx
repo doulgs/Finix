@@ -13,11 +13,11 @@ interface InputProps {
 }
 
 export const AreaInput = ({ value, onChange, onBlur, placeholder, numberOfLines = 4 }: InputProps) => {
-  const theme = useTheme();
+  const { palette } = useTheme();
   return (
     <TextInput
       className="flex-1 texttypography-primary dark:text-dark-typography-primary"
-      placeholderTextColor={theme.typography.muted}
+      placeholderTextColor={palette.typography.muted}
       placeholder={placeholder}
       onBlur={onBlur}
       onChangeText={onChange}

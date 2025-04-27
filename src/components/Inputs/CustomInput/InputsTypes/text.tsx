@@ -11,11 +11,11 @@ interface InputProps {
 }
 
 export const TextInputField = ({ value, onChange, onBlur, placeholder }: InputProps) => {
-  const theme = useTheme();
+  const { palette } = useTheme();
   return (
     <TextInput
       className="flex-1 text-base text-light-typography-primary dark:text-dark-typography-primary"
-      placeholderTextColor={theme.typography.muted}
+      placeholderTextColor={palette.typography.muted}
       placeholder={placeholder}
       onBlur={onBlur}
       onChangeText={onChange}

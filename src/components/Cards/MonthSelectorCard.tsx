@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const MonthSelectorCard = ({ initialDate = new Date(), onChange }: Props) => {
-  const theme = useTheme();
+  const { palette } = useTheme();
   const [currentDate, setCurrentDate] = useState(dayjs(initialDate).startOf("month"));
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const MonthSelectorCard = ({ initialDate = new Date(), onChange }: Props)
     <Card className="flex-row items-center justify-between px-4 py-3 rounded-lg">
       {/* Botão anterior */}
       <TouchableOpacity onPress={() => handleChangeMonth(-1)} className="mr-3">
-        <Ionicons name="chevron-back" size={22} color={theme.brand.primary} />
+        <Ionicons name="chevron-back" size={22} color={palette.brand.primary} />
       </TouchableOpacity>
 
       {/* Mês anterior */}
@@ -56,7 +56,7 @@ export const MonthSelectorCard = ({ initialDate = new Date(), onChange }: Props)
 
       {/* Botão próximo */}
       <TouchableOpacity onPress={() => handleChangeMonth(1)} className="ml-3">
-        <Ionicons name="chevron-forward" size={22} color={theme.brand.primary} />
+        <Ionicons name="chevron-forward" size={22} color={palette.brand.primary} />
       </TouchableOpacity>
     </Card>
   );

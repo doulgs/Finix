@@ -3,9 +3,11 @@ import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { Card } from "@/components/Cards";
+import { useTheme } from "@/hooks/styles/useTheme";
 
 export function ActionButtons() {
   const { to } = useCustomNavigation();
+  const { palette } = useTheme();
 
   const actions = [
     {
@@ -14,7 +16,7 @@ export function ActionButtons() {
       icon: "bank",
       color: "text-light-status-success dark:text-dark-status-success",
       onlyIcon: false,
-      onPress: () => to.transactions.new(),
+      onPress: () => to.accounts.base(),
     },
     {
       id: "2",
@@ -22,7 +24,7 @@ export function ActionButtons() {
       icon: "tag-outline",
       color: "text-light-status-danger dark:text-dark-status-danger",
       onlyIcon: false,
-      onPress: () => to.transactions.new(),
+      onPress: () => to.categories.base(),
     },
     {
       id: "3",
@@ -54,7 +56,7 @@ export function ActionButtons() {
           <Card className={isLast ? "mr-32" : ""}>
             <TouchableOpacity onPress={item.onPress} className="flex-row items-center">
               <View className={`mr-2 ${item.color}`}>
-                <MaterialCommunityIcons name={item.icon as any} size={24} />
+                <MaterialCommunityIcons name={item.icon as any} size={24} color={palette.brand.primary} />
               </View>
               {!item.onlyIcon && (
                 <Text className="text-light-typography-primary dark:text-dark-typography-primary font-semibold text-lg">

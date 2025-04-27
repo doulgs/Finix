@@ -12,7 +12,7 @@ interface Props {
 }
 
 function FloatingButton({ iconName, routingIcon, onPress }: Props) {
-  const theme = useTheme();
+  const { palette } = useTheme();
   return (
     <TouchableOpacity
       activeOpacity={0.7}
@@ -28,7 +28,7 @@ function FloatingButton({ iconName, routingIcon, onPress }: Props) {
           <Octicons
             name={iconName}
             size={28}
-            color={theme.typography.inverse}
+            color={palette.typography.inverse}
             style={{ transform: [{ rotate: routingIcon ? "45deg" : "0deg" }] }}
           />
         </View>
