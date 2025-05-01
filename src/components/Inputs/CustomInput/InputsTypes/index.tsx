@@ -12,4 +12,5 @@ export { PasswordInput } from "./password";
 export { SelectInput } from "./select";
 export { Select2Input } from "./select2";
 export { SelectColor } from "./SelectColor";
+export { SelectIcon } from "./SelectIcon";
 export { TextInputField } from "./text";

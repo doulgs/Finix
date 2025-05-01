@@ -18,6 +18,7 @@ import {
   Select2Input,
   SelectColor,
   SelectInput,
+  SelectIcon,
   TextInputField,
 } from "./InputsTypes";
 
@@ -37,6 +38,7 @@ const inputTypeComponents = {
   multiSelect: MultiSelectInput,
   file: FilePickerInput,
   color: SelectColor,
+  icon: SelectIcon,
 } as const;
 
 type InputType = keyof typeof inputTypeComponents;
@@ -90,11 +92,15 @@ const CustomInput = <T extends FieldValues = FieldValues>({
                 clear={() => onChange(type === "multiSelect" ? [] : "")}
                 {...rest}
               />
-              {isValueFilled(value) && type !== "multiSelect" && type !== "color" && type !== "file" && (
-                <TouchableOpacity onPress={() => onChange("")} style={{ marginLeft: 8 }}>
-                  <Ionicons name="close-circle-outline" size={20} color="#9CA3AF" />
-                </TouchableOpacity>
-              )}
+              {isValueFilled(value) &&
+                type !== "multiSelect" &&
+                type !== "color" &&
+                type !== "icon" &&
+                type !== "file" && (
+                  <TouchableOpacity onPress={() => onChange("")} style={{ marginLeft: 8 }}>
+                    <Ionicons name="close-circle-outline" size={20} color="#9CA3AF" />
+                  </TouchableOpacity>
+                )}
             </View>
 
             {error && (
