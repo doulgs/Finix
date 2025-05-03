@@ -1,10 +1,8 @@
-// src/contexts/LoadingContext.tsx
-import { LoadingScreen } from "@/components/Loadings/LoadingScreen";
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, ReactNode, useContext, useState } from "react";
+import { BlurLoadingModal } from "@/components/modals";
 
 interface LoadingOptions {
   msg?: string;
-  useBackground?: boolean;
 }
 
 interface LoadingContextData {
@@ -17,29 +15,26 @@ const LoadingContext = createContext<LoadingContextData>({} as LoadingContextDat
 export const LoadingProvider = ({ children }: { children: ReactNode }) => {
   const [loadingState, setLoadingState] = useState<{
     isLoading: boolean;
-    msg?: string;
-    useBackground?: boolean;
+    msg: string;
   }>({
     isLoading: false,
     msg: "Carregando...",
-    useBackground: true, // ✅ Padrão inicial
   });
 
   function setLoading(value: boolean, options?: LoadingOptions) {
     setLoadingState({
       isLoading: value,
       msg: options?.msg || "Carregando...",
-      useBackground: options?.useBackground ?? true, // ✅ Padrão se não passar
     });
   }
 
   return (
     <LoadingContext.Provider value={{ isLoading: loadingState.isLoading, setLoading }}>
       {children}
-      <LoadingScreen
+      <BlurLoadingModal
         visible={loadingState.isLoading}
-        msg={loadingState.msg}
-        useBackground={loadingState.useBackground}
+        message={loadingState.msg}
+        onRequestClose={() => setLoading(false)}
       />
     </LoadingContext.Provider>
   );

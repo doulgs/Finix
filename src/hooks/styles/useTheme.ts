@@ -1,4 +1,3 @@
-// src/hooks/useTheme.ts
 import { useColorScheme } from "react-native";
 import { colors } from "@/styles/colors";
 

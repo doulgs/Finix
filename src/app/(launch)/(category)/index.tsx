@@ -1,5 +1,4 @@
-import { FloatingButton } from "@/components/Buttons/FloatingButton";
-import { Card } from "@/components/Cards";
+import { Card } from "@/components/cards";
 import React from "react";
 import { FlatList, Text, View, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
@@ -72,7 +71,6 @@ export default function CategoryIndex() {
           )}
         />
       </View>
-      <FloatingButton iconName="plus" onPress={to.categories.new} />
     </>
   );
 }

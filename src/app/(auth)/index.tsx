@@ -1,19 +1,24 @@
-import { LogoFinix } from "@/assets/svg/LogoFinix";
-import { CustomBackground } from "@/components/Background/CustomBackground";
-import { PrimaryButton } from "@/components/Buttons/PrimaryButton";
-import { CustomInput } from "@/components/Inputs/CustomInput";
-import { useLoading } from "@/context/LoadingContext";
-import { useToast } from "@/context/ToastContext";
-import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
-import { useUserRepository } from "@/hooks/repositories/userRepository";
-import { useUserStorage } from "@/storages/useUserStorage";
-import { Ionicons } from "@expo/vector-icons";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useRootNavigationState } from "expo-router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Alert, Keyboard, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import * as yup from "yup";
+
+import { LogoFinix } from "@/assets/svg/LogoFinix";
+
+import { Button } from "@/components/buttons";
+import { CustomInput } from "@/components/inputs";
+import { Background } from "@/components/overlays";
+
+import { useLoading, useToast } from "@/context";
+
+import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
+import { useUserRepository } from "@/hooks/repositories/userRepository";
+
+import { useUserStorage } from "@/storages/useUserStorage";
+
+import { Ionicons } from "@expo/vector-icons";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const loginSchema = yup.object().shape({
   email: yup.string().email("E-mail inválido").required("E-mail obrigatório"),
@@ -40,7 +45,7 @@ export default function Login() {
   useEffect(() => {
     if (!navigationState?.key) return;
     if (user) {
-      to.panel.dashboard();
+      to.dashboard.home();
     }
   }, [user, navigationState?.key]);
 
@@ -61,7 +66,7 @@ export default function Login() {
       }
 
       reset();
-      to.panel.dashboard();
+      to.dashboard.home();
     } catch (error: any) {
       console.warn("Login error:", error);
       Alert.alert("Erro", error?.message || "Falha ao realizar login.");
@@ -71,10 +76,7 @@ export default function Login() {
   };
 
   return (
-    <CustomBackground
-      source={require("../../assets/image/background-login.png")}
-      style={{ width: "100%", height: "100%" }}
-    >
+    <Background source={require("../../assets/image/background-login.png")} style={{ width: "100%", height: "100%" }}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
@@ -119,9 +121,9 @@ export default function Login() {
                 </TouchableOpacity>
               </View>
 
-              <PrimaryButton title="Acessar" onPress={handleSubmit(onSubmit)} />
+              <Button title="Acessar" onPress={handleSubmit(onSubmit)} />
 
-              <TouchableOpacity onPress={() => to.register()}>
+              <TouchableOpacity onPress={() => to.auth.register()}>
                 <View className="flex-row justify-center mt-4">
                   <Text className="text-gray-600 dark:text-gray-300 text-sm">Ainda não tem uma conta? </Text>
                   <Text className="text-light-brand-secondary dark:text-dark-brand-secondary font-semibold text-sm">
@@ -133,6 +135,6 @@ export default function Login() {
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>
-    </CustomBackground>
+    </Background>
   );
 }

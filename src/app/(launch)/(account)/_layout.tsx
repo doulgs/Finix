@@ -1,6 +1,6 @@
-import { CustomHeader } from "@/components/Headers/CustomHeader";
-import { Stack } from "expo-router";
 import React from "react";
+import { Stack } from "expo-router";
+import { Header } from "@/components/headers";
 
 export default function LayoutAccount() {
   return (
@@ -9,7 +9,7 @@ export default function LayoutAccount() {
         name="index"
         options={{
           title: "Contas",
-          header: (props) => <CustomHeader {...props} subTitle="Visualize e organize suas contas" />,
+          header: (props) => <Header {...props} subTitle="Visualize e organize suas contas" />,
         }}
       />
 
@@ -17,7 +17,7 @@ export default function LayoutAccount() {
         name="new"
         options={{
           title: "Cadastrar Conta",
-          header: (props) => <CustomHeader {...props} subTitle="Preencha os campos para adicionar uma conta" />,
+          header: (props) => <Header {...props} subTitle="Preencha os campos para adicionar uma conta" />,
         }}
       />
 
@@ -25,7 +25,7 @@ export default function LayoutAccount() {
         name="detail"
         options={{
           title: "Detalhes da Conta",
-          header: (props) => <CustomHeader {...props} subTitle="Veja todas as informações da conta" />,
+          header: (props) => <Header {...props} subTitle="Veja todas as informações da conta" />,
         }}
       />
 
@@ -33,7 +33,7 @@ export default function LayoutAccount() {
         name="edit"
         options={{
           title: "Editar Conta",
-          header: (props) => <CustomHeader {...props} subTitle="Atualize os dados da conta" />,
+          header: (props) => <Header {...props} subTitle="Atualize os dados da conta" />,
         }}
       />
     </Stack>

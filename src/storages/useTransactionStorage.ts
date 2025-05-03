@@ -1,4 +1,4 @@
-import { CreateTransaction, UpdateTransaction } from "@/hooks/repositories/transactionRepository";
+import { CreateTransaction, UpdateTransaction } from "@/hooks/repositories";
 import { create } from "zustand";
 
 interface TransactionState {

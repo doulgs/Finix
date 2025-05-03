@@ -1,4 +1,4 @@
-import { CreateUser, UpdateUser } from "@/hooks/repositories/userRepository";
+import { CreateUser, UpdateUser } from "@/hooks/repositories";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";

@@ -1,21 +1,23 @@
 import { Ionicons } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as Crypto from "expo-crypto";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Alert, Keyboard, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
-import * as yup from "yup";
-import React, { useState } from "react";
-import * as Crypto from "expo-crypto";
-
-import { CustomBackground } from "@/components/Background/CustomBackground";
-import { CustomInput } from "@/components/Inputs/CustomInput";
-import { useLoading } from "@/context/LoadingContext";
-import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
-import { LogoFinix } from "@/assets/svg/LogoFinix";
 import uuid from "react-native-uuid";
+import * as yup from "yup";
+
+import { LogoFinix } from "@/assets/svg/LogoFinix";
+
+import { Button } from "@/components/buttons";
+import { CustomInput } from "@/components/inputs";
+import { TermsModal } from "@/components/modals/TermsModal";
+import { Background } from "@/components/overlays";
+
+import { useLoading, useToast } from "@/context";
+
+import { useCustomNavigation } from "@/hooks/navigation/useCustomNavigation";
 import { useUserRepository } from "@/hooks/repositories/userRepository";
-import { TermsModal } from "@/components/Modals/TermsModal";
-import { PrimaryButton } from "@/components/Buttons/PrimaryButton";
-import { useToast } from "@/context/ToastContext";
 
 const registerSchema = yup.object().shape({
   name: yup.string().required("Nome é obrigatório"),
@@ -90,7 +92,7 @@ export default function Register() {
           position: "bottom",
         });
         reset();
-        to.panel.dashboard();
+        to.dashboard.home();
       });
     } catch (error: any) {
       console.warn("Register error:", error);
@@ -106,10 +108,7 @@ export default function Register() {
   };
 
   return (
-    <CustomBackground
-      source={require("../../assets/image/background-login.png")}
-      style={{ width: "100%", height: "100%" }}
-    >
+    <Background source={require("../../assets/image/background-login.png")} style={{ width: "100%", height: "100%" }}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
@@ -197,11 +196,11 @@ export default function Register() {
 
               <TermsModal visible={showTerms} onClose={() => setShowTerms(false)} />
 
-              <PrimaryButton title="Criar conta" onPress={handleSubmit(onSubmit)} loading={isSubmitting} />
+              <Button title="Criar conta" onPress={handleSubmit(onSubmit)} loading={isSubmitting} />
 
               <View className="flex-row justify-center mt-4">
                 <Text className="text-gray-600 dark:text-gray-300 text-sm">Já tem uma conta? </Text>
-                <TouchableOpacity onPress={() => to.login()}>
+                <TouchableOpacity onPress={() => to.auth.login()}>
                   <Text className="text-primary-light dark:text-primary-dark font-semibold text-sm">Entrar</Text>
                 </TouchableOpacity>
               </View>
@@ -209,6 +208,6 @@ export default function Register() {
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>
-    </CustomBackground>
+    </Background>
   );
 }

@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useRef } from "react";
-import { Text, TouchableOpacity } from "react-native";
 import { clsx } from "clsx";
+import { Text, TouchableOpacity } from "react-native";
 
-import { ShowToastProps, TOAST_STYLES, ToastHandle, ToastMessage } from "@/components/Notifications/ToastMessage";
+import { ShowToastProps, TOAST_STYLES, ToastHandle, ToastMessage } from "@/components/toasts/ToastMessage";
 
 interface ToastContextType {
   showToast: (props: ShowToastProps) => void;

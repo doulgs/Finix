@@ -2,68 +2,57 @@ import clsx from "clsx";
 import React, { ReactNode } from "react";
 import { StyleSheet, View, ViewProps } from "react-native";
 
-// Tipos permitidos para card
-type CardType =
-  | "default"
-  | "primary"
-  | "primary-light"
-  | "primary-dark"
-  | "secondary"
-  | "secondary-light"
-  | "secondary-dark"
-  | "tertiary"
-  | "quaternary"
-  | "info"
-  | "info-light"
-  | "success"
-  | "success-light"
-  | "success-dark"
-  | "error"
-  | "error-light"
-  | "warning"
-  | "warning-light";
+type Variant = "default" | "outlined" | "elevated" | "flat";
+type Size = "sm" | "md" | "lg";
 
-interface Props extends ViewProps {
+interface CardProps extends ViewProps {
+  variant?: Variant;
+  padding?: Size;
+  rounded?: Size;
   className?: string;
   children?: ReactNode;
-  type?: CardType;
 }
 
-// Mapeamento para tokens de background
-const typeBackground: Record<CardType, string> = {
-  default: "bg-light-surface-card dark:bg-dark-surface-card",
-  primary: "bg-light-brand-primary dark:bg-dark-brand-primary",
-  "primary-light": "bg-light-brand-primary/90 dark:bg-dark-brand-primary/90",
-  "primary-dark": "bg-light-brand-primary/80 dark:bg-dark-brand-primary/80",
-  secondary: "bg-light-brand-secondary dark:bg-dark-brand-secondary",
-  "secondary-light": "bg-light-brand-secondary/90 dark:bg-dark-brand-secondary/90",
-  "secondary-dark": "bg-light-brand-secondary/80 dark:bg-dark-brand-secondary/80",
-  tertiary: "bg-light-status-info dark:bg-dark-status-info",
-  quaternary: "bg-light-status-warning dark:bg-dark-status-warning",
-  info: "bg-light-status-info dark:bg-dark-status-info",
-  "info-light": "bg-light-status-info/80 dark:bg-dark-status-info/80",
-  success: "bg-light-status-success dark:bg-dark-status-success",
-  "success-light": "bg-light-status-success/80 dark:bg-dark-status-success/80",
-  "success-dark": "bg-light-status-success/60 dark:bg-dark-status-success/60",
-  error: "bg-light-status-danger dark:bg-dark-status-danger",
-  "error-light": "bg-light-status-danger/80 dark:bg-dark-status-danger/80",
-  warning: "bg-light-status-warning dark:bg-dark-status-warning",
-  "warning-light": "bg-light-status-warning/80 dark:bg-dark-status-warning/80",
+const variantClasses: Record<Variant, string> = {
+  default: "border dark:border-dark-surface-pressed/50",
+  outlined: "border-2 border-blue-500",
+  elevated: "shadow-md border-transparent",
+  flat: "",
 };
 
-function Card({ className, type = "default", children, ...rest }: Props) {
-  const bgClass = typeBackground[type];
+const paddingClasses: Record<Size, string> = {
+  sm: "p-2",
+  md: "p-4",
+  lg: "p-6",
+};
 
+const roundedClasses: Record<Size, string> = {
+  sm: "rounded-sm",
+  md: "rounded-lg",
+  lg: "rounded-xl",
+};
+
+export function Card({
+  variant = "default",
+  padding = "md",
+  rounded = "md",
+  className,
+  children,
+  style,
+  ...rest
+}: CardProps) {
   return (
     <View
       renderToHardwareTextureAndroid
       shouldRasterizeIOS
       className={clsx(
-        "border border-light-surface-pressed/50 dark:border-dark-surface-pressed/50 rounded-lg p-3 overflow-hidden",
-        bgClass,
+        "overflow-hidden",
+        variantClasses[variant],
+        paddingClasses[padding],
+        roundedClasses[rounded],
         className
       )}
-      style={styles.card}
+      style={[styles.base, style]}
       {...rest}
     >
       {children}
@@ -72,9 +61,7 @@ function Card({ className, type = "default", children, ...rest }: Props) {
 }
 
 const styles = StyleSheet.create({
-  card: {
+  base: {
     elevation: 2,
   },
 });
-
-export { Card, CardType };

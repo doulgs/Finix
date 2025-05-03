@@ -1,6 +1,6 @@
-import { CustomHeader } from "@/components/Headers/CustomHeader";
-import { Stack } from "expo-router";
 import React from "react";
+import { Stack } from "expo-router";
+import { Header } from "@/components/headers";
 
 export default function LayoutCategory() {
   return (
@@ -9,7 +9,7 @@ export default function LayoutCategory() {
         name="index"
         options={{
           title: "Categorias",
-          header: (props) => <CustomHeader {...props} subTitle="Gerencie suas categorias" />,
+          header: (props) => <Header {...props} subTitle="Gerencie suas categorias" />,
         }}
       />
 
@@ -17,7 +17,7 @@ export default function LayoutCategory() {
         name="new"
         options={{
           title: "Cadastrar Categoria",
-          header: (props) => <CustomHeader {...props} subTitle="Preencha os campos para adicionar" />,
+          header: (props) => <Header {...props} subTitle="Preencha os campos para adicionar" />,
         }}
       />
 
@@ -25,7 +25,7 @@ export default function LayoutCategory() {
         name="detail"
         options={{
           title: "Detalhes da Categoria",
-          header: (props) => <CustomHeader {...props} subTitle="Visualize as informações completas" />,
+          header: (props) => <Header {...props} subTitle="Visualize as informações completas" />,
         }}
       />
 
@@ -33,7 +33,7 @@ export default function LayoutCategory() {
         name="edit"
         options={{
           title: "Editar Categoria",
-          header: (props) => <CustomHeader {...props} subTitle="Atualize os dados necessários" />,
+          header: (props) => <Header {...props} subTitle="Atualize os dados necessários" />,
         }}
       />
     </Stack>

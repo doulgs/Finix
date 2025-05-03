@@ -1,8 +1,8 @@
-import React, { createContext, useContext, ReactNode, useMemo } from "react";
-import { openDatabaseSync } from "expo-sqlite";
-import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
-import migrations from "../../drizzle/migrations";
 import { getDatabase } from "@/lib/database";
+import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
+import { openDatabaseSync } from "expo-sqlite";
+import React, { createContext, ReactNode, useContext } from "react";
+import migrations from "../../drizzle/migrations";
 
 const DATABASE_NAME = "finix.db";
 const sqliteInstance = openDatabaseSync(DATABASE_NAME);

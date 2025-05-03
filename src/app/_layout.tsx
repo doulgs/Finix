@@ -67,8 +67,9 @@ function AppWithDatabase() {
             <ToastProvider>
               <Stack screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="(auth)" />
+                <Stack.Screen name="(dashboard)" />
                 <Stack.Screen name="(launch)" />
-                <Stack.Screen name="(panel)" />
+                <Stack.Screen name="(notification)" />
               </Stack>
             </ToastProvider>
           </BottomSheetModalProvider>

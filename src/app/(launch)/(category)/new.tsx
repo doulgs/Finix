@@ -1,4 +1,4 @@
-import { CustomInput } from "@/components/Inputs/CustomInput";
+import { CustomInput } from "@/components/inputs/CustomInput";
 import { Octicons } from "@expo/vector-icons";
 import React from "react";
 import { useForm } from "react-hook-form";
