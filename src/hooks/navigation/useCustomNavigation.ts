@@ -17,7 +17,6 @@ export const useCustomNavigation = () => {
       transactions: {
         home: () => router.push("/(launch)/(transaction)"),
         new: () => router.push("/(launch)/(transaction)/new"),
-        newDetail: () => router.push("/(launch)/(transaction)/new_detail"),
         edit: () => router.push("/(launch)/(transaction)/edit"),
         detail: () => router.push("/(launch)/(transaction)/detail"),
       },
@@ -37,10 +36,10 @@ export const useCustomNavigation = () => {
       },
 
       goals: {
-        home: () => router.push("/(launch)/(tag)"),
-        new: () => router.push("/(launch)/(tag)/new"),
-        edit: () => router.push("/(launch)/(tag)/edit"),
-        detail: () => router.push("/(launch)/(tag)/detail"),
+        home: () => router.push("/(launch)/(goals)"),
+        new: () => router.push("/(launch)/(goals)/new"),
+        edit: () => router.push("/(launch)/(goals)/edit"),
+        detail: () => router.push("/(launch)/(goals)/detail"),
       },
     },
 

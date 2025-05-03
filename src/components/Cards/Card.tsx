@@ -16,7 +16,7 @@ interface CardProps extends ViewProps {
 const variantClasses: Record<Variant, string> = {
   default: "border dark:border-dark-surface-pressed/50",
   outlined: "border-2 border-blue-500",
-  elevated: "shadow-md border-transparent",
+  elevated: "border-transparent",
   flat: "",
 };
 
@@ -43,10 +43,8 @@ export function Card({
 }: CardProps) {
   return (
     <View
-      renderToHardwareTextureAndroid
-      shouldRasterizeIOS
       className={clsx(
-        "overflow-hidden",
+        "overflow-hidden bg-white",
         variantClasses[variant],
         paddingClasses[padding],
         roundedClasses[rounded],
@@ -62,6 +60,6 @@ export function Card({
 
 const styles = StyleSheet.create({
   base: {
-    elevation: 2,
+    elevation: 1,
   },
 });

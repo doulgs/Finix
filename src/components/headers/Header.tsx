@@ -1,15 +1,11 @@
 import React from "react";
 import clsx from "clsx";
-import { Image, StatusBar, Text, TouchableOpacity, View } from "react-native";
-
-import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
-import { NativeStackHeaderProps } from "@react-navigation/native-stack";
+import { Image, StatusBar, Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import { Background } from "@/components/overlays";
 import { useTheme } from "@/hooks/styles/useTheme";
 import { takeGreeting } from "@/utils/takeGreeting";
-
-import { Ionicons } from "@expo/vector-icons";
 
 interface ActionsProps {
   className?: string;
@@ -27,16 +23,24 @@ interface ExtraHeaderProps {
   transparentBackground?: boolean;
 }
 
-type StackOrTabHeaderProps = (NativeStackHeaderProps | BottomTabHeaderProps) & ExtraHeaderProps;
+interface HeaderProps extends ExtraHeaderProps {
+  navigation: {
+    goBack?: () => void;
+    canGoBack?: () => boolean;
+  };
+  options: {
+    title?: string;
+  };
+  route: {
+    name: string;
+  };
+}
 
 const STATUS_BAR_HEIGHT = StatusBar.currentHeight ?? 0;
-
-const isStackHeader = (props: any): props is NativeStackHeaderProps => "back" in props;
-
 const darkBg = require("@/assets/image/rectangle-orange-dark.png");
 const lightBg = require("@/assets/image/rectangle-orange-light.png");
 
-export const Header: React.FC<StackOrTabHeaderProps> = ({
+export const Header: React.FC<HeaderProps> = ({
   navigation,
   options,
   route,
@@ -47,66 +51,67 @@ export const Header: React.FC<StackOrTabHeaderProps> = ({
   imageAvatar,
   showImageAvatar = false,
   transparentBackground = false,
-  ...rest
 }) => {
   const { currentTheme } = useTheme();
   const backgroundSource = currentTheme === "dark" ? darkBg : lightBg;
-  const title = options.title?.toString() || route.name;
+  const title = options.title || route.name;
 
-  const canGoBack =
-    !hideBackButton &&
-    ((isStackHeader(rest) && rest.back) || (typeof navigation.canGoBack === "function" && navigation.canGoBack()));
+  const canGoBack = !hideBackButton && navigation?.canGoBack?.();
 
-  const containerStyle = {
-    width: "100%",
+  const containerStyle: ViewStyle = {
+    alignSelf: "stretch",
     height: 58 + STATUS_BAR_HEIGHT,
     paddingTop: STATUS_BAR_HEIGHT,
   };
 
-  const Wrapper: React.ComponentType<any> = transparentBackground ? View : Background;
-  const wrapperProps = transparentBackground
-    ? { style: containerStyle }
-    : { source: backgroundSource, style: containerStyle };
-
   const textColorClass = currentTheme === "dark" ? "text-dark-typography-inverse" : "text-light-typography-inverse";
-  const iconColor = currentTheme === "dark" ? "#FFFFFF" : "#000000";
 
-  return (
-    <Wrapper {...wrapperProps}>
-      <View className="flex-1 flex-row pr-2 pl-4 items-center justify-between">
-        <View className="flex-row items-center gap-3">
-          {canGoBack && (
-            <TouchableOpacity onPress={() => navigation.goBack?.()} className="p-2">
-              <Ionicons name="chevron-back" size={24} color={iconColor} />
-            </TouchableOpacity>
-          )}
+  const iconColor = currentTheme === "dark" ? "#000000" : "#FFFFFF";
 
-          {showImageAvatar && (
-            <Image
-              source={imageAvatar ? { uri: imageAvatar } : require("@/assets/image/default-profile.jpg")}
-              className="w-10 h-10 border border-stone-800 rounded-lg"
-            />
-          )}
+  const content = (
+    <View className="flex-1 flex-row pr-2 pl-4 items-center justify-between">
+      <View className="flex-row items-center gap-3">
+        {canGoBack && (
+          <TouchableOpacity onPress={() => navigation.goBack?.()} className="p-2">
+            <Ionicons name="chevron-back" size={24} color={iconColor} />
+          </TouchableOpacity>
+        )}
 
-          <View>
-            <Text className={clsx("text-xl font-bold", textColorClass)}>
-              {title === "Dashboard" ? takeGreeting() : title}
-            </Text>
+        {showImageAvatar && (
+          <Image
+            source={imageAvatar ? { uri: imageAvatar } : require("@/assets/image/default-profile.jpg")}
+            className="w-10 h-10 border border-stone-800 rounded-lg"
+          />
+        )}
 
-            {subTitle && <Text className={clsx("text-sm italic", textColorClass)}>{subTitle}</Text>}
+        <View>
+          <Text className={clsx("text-xl font-bold", textColorClass)}>
+            {title === "Dashboard" ? takeGreeting() : title}
+          </Text>
 
-            {label && <Text className={clsx("text-[10px] italic", textColorClass)}>{label}</Text>}
-          </View>
-        </View>
+          {subTitle && <Text className={clsx("text-sm italic", textColorClass)}>{subTitle}</Text>}
 
-        <View className="flex-row items-center gap-4 mr-1">
-          {actions.map((ac, i) => (
-            <TouchableOpacity key={i} onPress={ac.action} className={clsx("p-2", ac.className)}>
-              {ac.icon}
-            </TouchableOpacity>
-          ))}
+          {label && <Text className={clsx("text-[10px] italic", textColorClass)}>{label}</Text>}
         </View>
       </View>
-    </Wrapper>
+
+      <View className="flex-row items-center gap-4 mr-1">
+        {actions.map((ac, i) => (
+          <TouchableOpacity key={i} onPress={ac.action} className={clsx("p-2", ac.className)}>
+            {ac.icon}
+          </TouchableOpacity>
+        ))}
+      </View>
+    </View>
+  );
+
+  if (transparentBackground) {
+    return <View style={containerStyle}>{content}</View>;
+  }
+
+  return (
+    <Background source={backgroundSource} style={containerStyle}>
+      {content}
+    </Background>
   );
 };

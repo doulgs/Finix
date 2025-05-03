@@ -62,7 +62,7 @@ function AppWithDatabase() {
     <ThemeProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <LoadingProvider>
-          <StatusBar style="auto" />
+          <StatusBar style="light" />
           <BottomSheetModalProvider>
             <ToastProvider>
               <Stack screenOptions={{ headerShown: false }}>
