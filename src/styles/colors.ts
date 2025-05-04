@@ -1,7 +1,7 @@
 export const colors = {
   light: {
     brand: {
-      primary: "#FF941A",
+      primary: "#ff8604", //"#FF941A",
       secondary: "#ffac4c",
     },
     status: {
@@ -28,7 +28,7 @@ export const colors = {
     },
     stroke: {
       default: "#9CA3AF",
-      strong: "#505763",
+      strong: "#52525b",
       focus: "#FF941A",
       danger: "#EF4444",
     },

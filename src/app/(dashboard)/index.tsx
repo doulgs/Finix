@@ -14,43 +14,12 @@ import {
 } from "react-native";
 
 import { SummaryCard } from "@/components/cards";
-import { formatToCurrency } from "@/utils/formatToCurrency";
+import { BalanceCard } from "@/components/cards/BalanceCard";
+import { useUserStorage } from "@/storages/useUserStorage";
+import { takeGreeting } from "@/utils/takeGreeting";
 
 const { width } = Dimensions.get("window");
 const SLIDE_HEIGHT = 240;
-
-function ContaCorrente() {
-  return (
-    <View className="px-4">
-      <Text className="text-white text-lg">Saldo atual</Text>
-
-      <View className="flex-row items-center justify-between py-3 border-b border-b-light-surface-sheet">
-        <View>
-          <Text className="text-white text-3xl font-bold">R$ 0,00</Text>
-        </View>
-        <Feather name="eye-off" size={20} color="white" />
-      </View>
-
-      <View className="mt-4">
-        <View className="flex-row justify-between items-center">
-          <Text className="text-white/60 text-xs">Saldo das Metas</Text>
-          <Text className="text-white text-sm mt-1">{formatToCurrency(98456)}</Text>
-        </View>
-        <View className="flex-row justify-between items-center">
-          <Text className="text-white/60 text-xs">Saldo das contas</Text>
-          <Text className="text-white text-sm mt-1">{formatToCurrency(456879)}</Text>
-        </View>
-        <View className="flex-row justify-between items-center">
-          <Text className="text-white/60 text-xs">Saldo das categorias</Text>
-          <Text className="text-white text-sm mt-1">{formatToCurrency(231564)}</Text>
-        </View>
-      </View>
-      <Pressable className="mt-6 border border-white rounded-md py-2 items-center">
-        <Text className="text-white font-semibold">Ir para extrato detalhado</Text>
-      </Pressable>
-    </View>
-  );
-}
 
 function QuickActions() {
   const actions = [
@@ -73,7 +42,7 @@ function QuickActions() {
 
 function ActivityFeed() {
   return (
-    <View className="bg-white flex-1 p-4">
+    <View className="bg-white flex-1 p-6">
       <View className="flex-row justify-between items-center mb-4">
         <Text className="text-base font-semibold">Atividades</Text>
         <Pressable className="flex-row items-center gap-1">
@@ -99,7 +68,7 @@ function ActivityFeed() {
 function FloatingMenuButton() {
   return (
     <View className="absolute bottom-4 right-4">
-      <Pressable className="bg-blue-700 rounded-full py-3 px-6 flex-row items-center gap-2 shadow-md">
+      <Pressable className="bg-light-brand-primary rounded-xl py-3 px-6 flex-row items-center gap-2 shadow-md">
         <Feather name="menu" size={20} color="white" />
         <Text className="text-white font-medium">Menu</Text>
       </Pressable>
@@ -108,12 +77,23 @@ function FloatingMenuButton() {
 }
 
 export default function Index() {
+  const { user } = useUserStorage();
   const { to, router } = useCustomNavigation();
+
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const [visible, setVisible] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const slides = [
-    { key: "corrente", content: <ContaCorrente />, backgroundColor: "#ff8604" },
+    {
+      key: "corrente",
+      content: (
+        <BalanceCard visible={visible} onToggleVisibility={() => setVisible((prev) => !prev)} isLoading={loading} />
+      ),
+      backgroundColor: "#ff8604",
+    },
     { key: "poupanca", content: <SummaryCard />, backgroundColor: "#ff791a" },
   ];
 
@@ -143,9 +123,10 @@ export default function Index() {
           route={{ name: "Dashboard" }}
           showImageAvatar
           hideBackButton
-          subTitle="Teste"
+          subTitle={user?.name ? user.name : "Usuário"}
+          imageAvatar={user?.image}
           transparentBackground
-          options={{ title: "Douglas" }}
+          options={{ title: takeGreeting() }}
           actions={[
             {
               icon: <Octicons name="question" size={20} color="white" />,

@@ -46,24 +46,18 @@ const SummaryCard: React.FC<Props> = ({ isLoading = false, summary = {}, toRecei
       label,
       value,
       Icon,
+      iconColor,
     }: {
       type: "success" | "error" | "info" | "primary";
       label: string;
       value: string;
-      Icon: React.ComponentType<{ width: number; height: number }>;
+      Icon: React.ComponentType<{ width: number; height: number; color: string; opacity: number }>;
+      iconColor: string;
     }) => {
       return (
-        <Card
-          variant="elevated"
-          className={clsx("flex-1 flex-row h-20 p-4 justify-between", {
-            "bg-[#22c55e]": type === "success",
-            "bg-[#ef4444]": type === "error",
-            "bg-[#3b82f6]": type === "info",
-            "bg-[#52525b]": type === "primary",
-          })}
-        >
+        <Card variant="elevated" className={clsx("flex-1 flex-row h-20 p-4 justify-between bg-light-stroke-strong")}>
           <View className="absolute right-[-20] bottom-[-20]">
-            <Icon width={100} height={100} />
+            <Icon width={100} height={105} color={iconColor} opacity={0.7} />
           </View>
           <View className="flex-1 flex-row items-center gap-2">
             <View>
@@ -90,15 +84,33 @@ const SummaryCard: React.FC<Props> = ({ isLoading = false, summary = {}, toRecei
       <View className="gap-2">
         <Text className="text-white text-lg">Gastos por Categoria</Text>
         <View className="flex-row gap-3">
-          <InfoCard type="success" label={sumRevLabel} value={formattedSumRev} Icon={ArrowUpCircle} />
-          <InfoCard type="error" label={sumExpLabel} value={formattedSumExp} Icon={ArrowDownCircle} />
+          <InfoCard
+            type="success"
+            label={sumRevLabel}
+            value={formattedSumRev}
+            Icon={ArrowUpCircle}
+            iconColor="#22C55E"
+          />
+          <InfoCard
+            type="error"
+            label={sumExpLabel}
+            value={formattedSumExp}
+            Icon={ArrowDownCircle}
+            iconColor="#EF4444"
+          />
         </View>
       </View>
       <View className="gap-2">
         <Text className="text-white text-lg">Gastos por Contas</Text>
         <View className="flex-row gap-3">
-          <InfoCard type="info" label={trRevLabel} value={formattedTrRev} Icon={ArrowUpCircle} />
-          <InfoCard type="primary" label={trExpLabel} value={formattedTrExp} Icon={ArrowDownCircle} />
+          <InfoCard type="info" label={trRevLabel} value={formattedTrRev} Icon={ArrowUpCircle} iconColor="#3B82F6" />
+          <InfoCard
+            type="primary"
+            label={trExpLabel}
+            value={formattedTrExp}
+            Icon={ArrowDownCircle}
+            iconColor="#FACC15"
+          />
         </View>
       </View>
     </View>

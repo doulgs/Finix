@@ -2,20 +2,31 @@
  * Formata um número como moeda brasileira (BRL).
  *
  * @param value - O valor numérico a ser formatado. Se não for um número finito, será tratado como 0.
- * @returns Uma string formatada como moeda brasileira. Exemplo: `R$ 1.000,00`
+ * @param visible - Indica se o valor deve ser exibido ou ocultado. Se `false`, mantém "R$" visível e substitui o restante da string por asteriscos com o mesmo número de caracteres.
+ * @returns Uma string formatada como moeda brasileira (ex: `R$ 1.000,00`) ou mascarada (ex: `R$ ********`).
  */
-export function formatToCurrency(value: number | null | undefined): string {
+export function formatToCurrency(value: number | null | undefined, visible: boolean = true): string {
   const numericValue = Number(value);
   const validValue = Number.isFinite(numericValue) ? numericValue : 0;
-  // Garante pelo menos duas casas decimais e separador de milhares
-  return validValue
-    .toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })
-    .replace(/^(\D+)/, "$1 "); // assegura espaço após R$
+
+  const formatted = validValue.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  if (!visible) {
+    const match = formatted.match(/^(\D+)(.+)$/); // separa prefixo (ex: "R$ ") do valor
+    if (match) {
+      const prefix = match[1].trimEnd(); // "R$"
+      const restLength = match[2].length;
+      return `${prefix} ${"*".repeat(restLength)}`;
+    }
+    return "R$ ****"; // fallback
+  }
+
+  return formatted.replace(/^(\D+)/, "$1 "); // garante espaço após "R$"
 }
 
 /**

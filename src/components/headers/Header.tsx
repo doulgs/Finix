@@ -1,9 +1,8 @@
 import React from "react";
-import clsx from "clsx";
 import { Image, StatusBar, Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { clsx } from "clsx";
 import { Ionicons } from "@expo/vector-icons";
 
-import { Background } from "@/components/overlays";
 import { useTheme } from "@/hooks/styles/useTheme";
 import { takeGreeting } from "@/utils/takeGreeting";
 
@@ -110,8 +109,8 @@ export const Header: React.FC<HeaderProps> = ({
   }
 
   return (
-    <Background source={backgroundSource} style={containerStyle}>
+    <View className="bg-light-brand-primary" style={containerStyle}>
       {content}
-    </Background>
+    </View>
   );
 };
