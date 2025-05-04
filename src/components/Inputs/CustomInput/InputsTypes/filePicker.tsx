@@ -3,8 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
-import clsx from "clsx";
-
+import { clsx } from "clsx";
 interface FilePickerInputProps {
   value: { name: string; base64: string }[];
   onChange: (value: { name: string; base64: string }[]) => void;

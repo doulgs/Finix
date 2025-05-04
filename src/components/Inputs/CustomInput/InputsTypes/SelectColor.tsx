@@ -2,8 +2,7 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { View, Text, TouchableOpacity, useColorScheme } from "react-native";
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import { Ionicons } from "@expo/vector-icons";
-import clsx from "clsx";
-
+import { clsx } from "clsx";
 import ColorPicker, { Panel1, HueSlider, Preview } from "reanimated-color-picker";
 import { useSharedValue } from "react-native-reanimated";
 

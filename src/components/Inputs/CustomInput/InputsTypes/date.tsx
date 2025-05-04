@@ -4,8 +4,7 @@ import React, { useCallback, useMemo, useRef } from "react";
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import { Text, TouchableOpacity, View } from "react-native";
 import { Calendar } from "react-native-calendars";
-import clsx from "clsx";
-
+import { clsx } from "clsx";
 interface DateInputProps {
   value: string;
   onChange: (value: string) => void;

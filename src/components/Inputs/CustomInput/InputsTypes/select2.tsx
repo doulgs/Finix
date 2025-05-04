@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { Text, TouchableOpacity, View, useColorScheme } from "react-native";
 import { colors as tokens } from "@/styles/colors"; // Ajuste conforme necessário

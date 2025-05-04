@@ -5,8 +5,7 @@ import { Card } from "./Card";
 import { ArrowDownCircle } from "@/assets/svg/ArrowDownCircle";
 import { ArrowUpCircle } from "@/assets/svg/ArrowUpCircle";
 import { formatToCurrency } from "@/utils/formatToCurrency";
-import clsx from "clsx";
-
+import { clsx } from "clsx";
 interface GroupData {
   label_revenue?: string;
   label_expense?: string;

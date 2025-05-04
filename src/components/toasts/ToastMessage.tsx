@@ -1,5 +1,5 @@
 import { FontAwesome5 } from "@expo/vector-icons";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import React, { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import Animated, { FadeInUp, FadeOutUp } from "react-native-reanimated";
