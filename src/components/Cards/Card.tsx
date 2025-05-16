@@ -15,7 +15,7 @@ interface CardProps extends ViewProps {
 
 const variantClasses: Record<Variant, string> = {
   default: "border dark:border-dark-surface-pressed/50",
-  outlined: "border-2 border-blue-500",
+  outlined: "border border-white",
   elevated: "border-transparent",
   flat: "",
 };
@@ -41,16 +41,19 @@ export function Card({
   style,
   ...rest
 }: CardProps) {
+  const isPrimary = variant === "default";
+
   return (
     <View
       className={clsx(
-        "overflow-hidden bg-white",
+        "overflow-hidden",
+        isPrimary && "bg-white",
         variantClasses[variant],
         paddingClasses[padding],
         roundedClasses[rounded],
         className
       )}
-      style={[styles.base, style]}
+      style={[isPrimary ? styles.base : undefined, style]}
       {...rest}
     >
       {children}

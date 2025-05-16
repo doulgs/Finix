@@ -1,8 +1,9 @@
 import React from "react";
-import { Image, StatusBar, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 import { clsx } from "clsx";
 import { Ionicons } from "@expo/vector-icons";
+import { Image, StatusBar, Text, TouchableOpacity, View, ViewStyle } from "react-native";
 
+import { GradientLinear } from "@/components/overlays";
 import { useTheme } from "@/hooks/styles/useTheme";
 import { takeGreeting } from "@/utils/takeGreeting";
 
@@ -20,6 +21,7 @@ interface ExtraHeaderProps {
   showImageAvatar?: boolean;
   imageAvatar?: string | null;
   transparentBackground?: boolean;
+  gradientBackground?: boolean;
 }
 
 interface HeaderProps extends ExtraHeaderProps {
@@ -50,6 +52,7 @@ export const Header: React.FC<HeaderProps> = ({
   imageAvatar,
   showImageAvatar = false,
   transparentBackground = false,
+  gradientBackground = true,
 }) => {
   const { currentTheme } = useTheme();
   const backgroundSource = currentTheme === "dark" ? darkBg : lightBg;
@@ -103,6 +106,10 @@ export const Header: React.FC<HeaderProps> = ({
       </View>
     </View>
   );
+
+  if (gradientBackground) {
+    return <GradientLinear style={containerStyle}>{content}</GradientLinear>;
+  }
 
   if (transparentBackground) {
     return <View style={containerStyle}>{content}</View>;

@@ -54,7 +54,7 @@ const SummaryCard: React.FC<Props> = ({ isLoading = false, summary = {}, toRecei
       iconColor: string;
     }) => {
       return (
-        <Card variant="elevated" className={clsx("flex-1 flex-row h-20 p-4 justify-between bg-light-stroke-strong")}>
+        <Card variant="elevated" className={clsx("flex-1 flex-row h-20 p-4 justify-between bg-zinc-900")}>
           <View className="absolute right-[-20] bottom-[-20]">
             <Icon width={100} height={105} color={iconColor} opacity={0.7} />
           </View>
