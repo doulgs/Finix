@@ -14,7 +14,8 @@
       "backgroundColor": "#FF941A"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.doulgs.Finix"
     },
     "android": {
       "versionCode": 1,

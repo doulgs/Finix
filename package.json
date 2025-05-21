@@ -11,7 +11,8 @@
     "prebuild": "expo prebuild",
     "dev-android": "expo prebuild && expo run:android",
     "release": "expo run:android --variant=release",
-    "build": "expo prebuild && cd android && gradlew.bat assembleRelease && cd .."
+    "build": "expo prebuild && cd android && gradlew.bat assembleRelease && cd ..",
+    "postinstall": "chmod +x android/gradlew"
   },
   "jest": {
     "preset": "jest-expo"

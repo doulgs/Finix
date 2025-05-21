@@ -3,11 +3,11 @@ import { Animated, Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollVi
 
 import { SummaryCard } from "@/components/cards";
 import { BalanceCard } from "@/components/cards/BalanceCard";
-import { QuickActions } from "@/components/QuickActions";
+import { QuickActions } from "@/components/quickActions";
 
 import { Button } from "@/components/buttons";
 import { ActivityFeed } from "@/components/datagrids/ActivityFeed";
-import { SliderSection } from "@/components/Slider";
+import { SliderSection } from "@/components/slider";
 
 const { width } = Dimensions.get("window");
 
